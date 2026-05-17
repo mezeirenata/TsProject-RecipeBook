@@ -1,0 +1,30 @@
+body{
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: default;
+
+}
+
+#navbar{
+  background-image: url('/images/background.png');
+  background-size: cover;
+  background-position-y: center; 
+  height: 60vh;
+  background-repeat: no-repeat;
+  transition: height 0.35s ease;
+
+}
+#navbar.scrolled{
+  height: 30vh;
+}
+#title{
+  font-size: 35px;
+  transition:  0.35s ease;
+}
+#title.scrolled{
+  font-size: 25px;
+}
+
+.bg-lightpink{
+  background-color:rgb(255, 240, 240) ;
+}
