@@ -25,6 +25,14 @@ body{
   font-size: 25px;
 }
 
-.bg-lightpink{
-  background-color:rgb(255, 240, 240) ;
+.bg-brown{
+  background-color:rgb(27, 23, 23)!important;
+}
+
+.border-end-radius{
+  border-top-right-radius:1vh ;border-bottom-right-radius:1vh;border-bottom-left-radius: 0;border-top-left-radius: 0;
+}
+
+.border-start-radius{
+   border-top-right-radius:0 ;border-bottom-right-radius:0;border-bottom-left-radius: 1vh;border-top-left-radius:1vh;
 }

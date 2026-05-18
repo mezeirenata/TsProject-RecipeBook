@@ -1,5 +1,6 @@
 import './styles/style.css';
 import './styles/ingredients.css'
+
 window.addEventListener('scroll', () => {
     let scrolled = false ;
     if (window.scrollY > 50){
