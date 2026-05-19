@@ -4,10 +4,10 @@ export interface Recipe{
     id: string;
     nev: string;
     url: string;
-    elkeszitesIdoPerc: number;
+    elkeszitesiIdoPerc: number;
     elkeszites: string[];
     tipus: string;
-    kategoria: string;
+    kategoria: string[];
     kepUrl: string;
     hozzavalok: {
         hozzavalo: Ingredient,
