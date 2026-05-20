@@ -8,7 +8,7 @@ body{
 #navbar{
   background-image: url('/images/background.png');
   background-size: cover;
-  background-position-y: center; 
+  background-position-y: center;
   height: 400px;
   background-repeat: no-repeat;
   /* transition:height 0.4s ease-in; */
@@ -39,10 +39,11 @@ body{
 }
 
 #recipes-list{
-  height: 700px;
+  max-height: 700px;
   overflow-y: auto;
-
+  height:550px;
 }
+
 
 .form-select{
   cursor:pointer;
@@ -61,13 +62,25 @@ body{
     transition: 0.2s ease-in-out ;
 }
 
+.card-recipe:hover{
+   transition: 0.2s ease-in-out ;
+   background-color: rgba(199, 199, 199, 0.163);
+
+}
+.card-recipe{
+  transition: 0.2s ease-in-out ;
+}
+
+
+
+
 @media(max-width:3000px){
     #functionable-navbar{
         position: absolute;
         background-color: #dc3546c2;
         z-index: 10;
         margin-top:-90px;
-   } 
+   }
 }
 @media(max-width:1000px){
     #functionable-navbar{
@@ -77,5 +90,19 @@ body{
         margin-top:-75px;
     }
 }
+@media(min-width:1400px){
+ 
+}
+@media(max-width:1400px){
 
+}
+@media(max-width:1200px){
+
+}
+@media(max-width:992px){
+ 
+}
+@media(max-width:768px){
+  
+}
 

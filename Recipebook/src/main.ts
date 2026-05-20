@@ -9,6 +9,9 @@
 // footer?
 // visszakérdezés
 // állapot jelzés
+// validáció
+// összes kilistázás gomb
+// modal
 import './styles/style.css';
 import './styles/ingredients.css'
 import type { Recipe } from './models/recipe';
@@ -27,32 +30,39 @@ let targetHeight = 400;
 
 window.addEventListener("scroll", () => {
     targetHeight = Math.max(400 - window.scrollY, 200);
+    currentHeight += (targetHeight - currentHeight) * 0.1;
+    
+    background.style.height = `${currentHeight}px`;
 });
 
-function animate() {
-    currentHeight += (targetHeight - currentHeight) * 0.1;
 
-    background.style.height = `${currentHeight}px`;
-
-    requestAnimationFrame(animate);
-}
-
-animate();
 
 function renderRecipes(recipes: Recipe[]){
     const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
-    divList.innerHTML = "";
-    divList.innerHTML = `<div class="col-12 col-md-6  col-lg-4 mb-5 ">
-    <div class="btn btn-outline-success border-success border-3 alert alert-secondary card mx-auto shadow w-100  text-center h-100 " id="plus-btn">
-    <h1 class="my-auto"><i class="bi bi-plus-circle text-success"></i></h1>
-    </div>
-    </div>`;
-    for(let i =0; i < 5; i++){
+
+
+    if (recipes.length == 0){
+        divList.innerHTML == "";
+        divList.classList.toggle("d-none",true);
+        (document.getElementById("zero-found") as HTMLDivElement)!.classList.toggle("d-none",false);
+
+    }
+    else{
+        divList.classList.toggle("d-none",false);
+        (document.getElementById("zero-found") as HTMLDivElement)!.classList.toggle("d-none",true);
+        divList.innerHTML = "";
+        divList.innerHTML = `<div class="col-12 col-md-6 col-lg-4 mb-5">
+        <div class="btn  btn-outline-success  border-success border-3   alert alert-secondary  card mx-auto shadow w-100  text-center" id="plus-btn">
+        <h1 class="my-auto"><i class="bi bi-plus-circle text-success"></i></h1>
+        </div>
+        </div>
+        </div>`;
+    }
             recipes.forEach(recipe => {
                 const tdDiv = document.createElement('td');
                 tdDiv.className = "col-12  col-md-6 col-lg-4 mb-5";
                 const cardDiv = document.createElement('div');
-                cardDiv.className = 'card mx-auto shadow w-100';
+                cardDiv.className = 'card mx-auto shadow w-100 card-recipe';
                 cardDiv.style.width = "18rem";
                 cardDiv.innerHTML = `
                 <img src="${recipe.kepUrl}" class="card-img-top" alt="Sikertelen képbetöltés">
@@ -69,8 +79,8 @@ function renderRecipes(recipes: Recipe[]){
                     <span class="badge bg-warning text-dark rounded fs-6">${recipe.tipus}</span>
                     </div>
                     <hr>
-                    <div class="d-flex justify-content-between">
-                        <div class="btn btn-success w-100 me-2 fw-bold" id="details-${recipe.id}">Részletek</div>
+                    <div class="d-flex justify-content-between" >
+                        <div class="btn btn-success w-100 me-2 fw-bold " id="details-${recipe.id}">Részletek</div>
                         <div class="btn btn-danger" id="delete-${recipe.id}"><i class="bi bi-trash3"></i></div>
                     </div>
                 </div>
@@ -79,37 +89,37 @@ function renderRecipes(recipes: Recipe[]){
                 tdDiv.appendChild(cardDiv);
                 divList.appendChild(tdDiv);
             });
-        }}
-
-
-
-if (!document.getElementById("recipes-list")!.className.includes("d-none")){
-    try{
-       
-        renderRecipes(await getAllRecipes(globalFilterCategory,globalFilterType));
-        noError();
-
-    }
-    catch(e){
-        console.error(e);
-        printError();
+        }
     
-    }
 
-}
+
+document.getElementById("select-category")!.addEventListener('input', () => {
+    globalFilterCategory = (document.getElementById("select-category")! as HTMLSelectElement).value;
+    if (globalFilterCategory.trim() != ""){
+
+    }
+});
+document.getElementById("select-type")!.addEventListener('input', () => {
+    globalFilterType = (document.getElementById("select-type")! as HTMLSelectElement).value;
+     if (globalFilterType.trim() != ""){
+        
+    }
+});
+
+document.getElementById("search-input")!.addEventListener('input',async() => {
+    if ((document.getElementById("search-input")! as HTMLSelectElement).value != "")
+   {}
+});
 
 document.getElementById("search-input")!.addEventListener('change',async() => {
-    try{
-        renderRecipes(await searchRecipes(globalFilterCategory,globalFilterType));
-        noError();
-    }
-    catch(e){
-        console.error(e);
-        printError();
-    }
+    trySearch();
 });
 document.getElementById("btn-search")!.addEventListener( 'click',async() => {
-     try{
+        trySearch();
+});
+
+async function trySearch(){
+ try{
         renderRecipes(await searchRecipes(globalFilterCategory,globalFilterType));
         noError();
     }
@@ -117,10 +127,11 @@ document.getElementById("btn-search")!.addEventListener( 'click',async() => {
         console.error(e);
         printError();
     }
-});
+}
 
 function printError(){
-        /// error ablak megjelenítése, error kiírása
+    /// error ablak megjelenítése, error kiírása
+        (document.getElementById("zero-found") as HTMLDivElement)!.classList.toggle("d-none",true);
         document.getElementById("recipes-list")!.classList.toggle("d-none",true);
         document.getElementById("not-found")!.classList.toggle("d-none",false);
         let searchVal = (document.getElementById("search-input")! as HTMLInputElement).value;
@@ -136,6 +147,17 @@ function printError(){
 function noError(){
     document.getElementById("recipes-list")!.classList.toggle("d-none",false);
     // loading screen kikapcs
-    document.getElementById("recipes-list")!.style.overflowY = "scroll";
+    document.getElementById("recipes-list")!.style.overflowY = "auto";
     document.getElementById("not-found")!.classList.toggle("d-none",true);
+}
+
+if (!document.getElementById("recipes-list")!.className.includes("d-none")){
+    try{
+        renderRecipes(await getAllRecipes(globalFilterCategory,globalFilterType));
+        noError();
+    }
+    catch(e){
+        console.error(e);
+        printError();
+    }
 }
