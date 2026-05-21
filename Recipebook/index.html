@@ -35,6 +35,8 @@
       
     </div>
 
+    
+
     <div class="container-fluid  mb-5 shadow py-2 " id="functionable-navbar" >
               <div class="container">
                 <nav class="navbar navbar-expand-lg ">
@@ -78,13 +80,12 @@
     <div class="row">
       <h3 class="fw-bold text-center mt-3">Még nincs feltöltött recept.</h3>
       <h5 class="text-center mb-3 text-muted">Töltse fel az első receptet az alábbi gombra kattintva!</h5>
-      <div class="btn mx-auto col-12 col-md-6 btn-outline-success  border-success border-3  alert alert-secondary shadow" id="plus-btn">
+      <button data-bs-toggle="modal" data-bs-target="#projectModal" class="plus-btn btn mx-auto col-12 col-md-6 btn-outline-success  border-success border-3  alert alert-secondary shadow" >
       <h1 class="my-auto"><i class="bi bi-plus-circle text-success"></i></h1>
-      </div>
+      </button>
 
     </div>
-  </div>
-  
+  </div>  
 
   <div class="container mb-5" >
     <div class="row my-5" id="recipes-list">
@@ -108,7 +109,48 @@
   </div>
 
   </div>
-
+ <div class="modal fade" id="projectModal" tabindex="-1">
+        <div class="modal-dialog">
+            <form id="project-form" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Projekt hozzáadása</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Projekt neve</label>
+                        <input type="text" id="p-name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ügyfél</label>
+                        <input type="text" id="p-client" class="form-control" required>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label class="form-label">Határidő</label>
+                            <input type="date" id="p-deadline" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Kategória</label>
+                            <select id="p-cat" class="form-select">
+                                <option value="Web">Web</option>
+                                <option value="Design">Design</option>
+                                <option value="Marketing">Marketing</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Költségvetés (Ft)</label>
+                        <input type="number" id="p-budget" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+                    <button type="submit" class="btn btn-primary" id="save-project">Mentés</button>
+                </div>
+            </form>
+        </div>
+   </div>
 
 
     <script type="module" src="/src/main.ts"></script>

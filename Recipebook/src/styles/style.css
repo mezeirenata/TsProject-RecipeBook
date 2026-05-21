@@ -66,15 +66,15 @@ background-image:
   cursor:pointer;
 }
 
-#plus-btn:hover h1{
+.plus-btn:hover h1{
   transition: 0.2s ease-in-out ;
   font-size:55px!important;
 }
-#plus-btn:hover h1 i{
+.plus-btn:hover h1 i{
   color:white!important;
 }
 
-#plus-btn h1{
+.plus-btn h1{
     font-size:45px;
     transition: 0.2s ease-in-out ;
 }

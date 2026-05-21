@@ -36,6 +36,20 @@ window.addEventListener("scroll", () => {
 });
 
 
+const modal = document.getElementById('projectModal');
+
+// a bs modal lecsukódásakor a fókusz megmarad a modalon -> a hover effektus beragadt a gombon
+
+modal!.addEventListener('hidden.bs.modal', function () {
+    setTimeout(() => { // azért kell, mert míg lecsukódik a modal meg kell várni
+        // document.getElementById("plus-btn")!.blur(); // fókusz visszanyerése
+        let buttons = document.querySelectorAll(".plus-btn")!;
+        buttons.forEach(btn  => {
+            (btn as HTMLButtonElement)!.blur();
+        });
+    }, 0);
+});
+
 
 function renderRecipes(recipes: Recipe[]){
     const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
@@ -52,11 +66,13 @@ function renderRecipes(recipes: Recipe[]){
         (document.getElementById("zero-found") as HTMLDivElement)!.classList.toggle("d-none",true);
         divList.innerHTML = "";
         divList.innerHTML = `<div class="col-12 col-md-6 col-lg-4 mb-5">
-        <div class="btn  btn-outline-success  border-success border-3   alert alert-secondary  card mx-auto shadow w-100  text-center" id="plus-btn">
+        <button data-bs-toggle="modal" data-bs-target="#projectModal" class="btn  btn-outline-success  border-success border-3   alert alert-secondary  card mx-auto shadow w-100  text-center plus-btn">
         <h1 class="my-auto"><i class="bi bi-plus-circle text-success"></i></h1>
-        </div>
-        </div>
+        </button>
         </div>`;
+
+ 
+      
     }
             recipes.forEach(recipe => {
                 let timeString = "";
