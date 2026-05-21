@@ -7,7 +7,7 @@ export interface Recipe{
     elkeszitesiIdoPerc: number;
     elkeszites: string[];
     tipus: string;
-    kategoria: string[];
+    kategoria: string;
     kepUrl: string;
     hozzavalok: {
         hozzavalo: Ingredient,

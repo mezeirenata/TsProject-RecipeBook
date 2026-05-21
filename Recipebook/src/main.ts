@@ -95,24 +95,32 @@ function renderRecipes(recipes: Recipe[]){
 
 document.getElementById("select-category")!.addEventListener('input', () => {
     globalFilterCategory = (document.getElementById("select-category")! as HTMLSelectElement).value;
-    if (globalFilterCategory.trim() != ""){
-
-    }
+    showClearBtn();
 });
 document.getElementById("select-type")!.addEventListener('input', () => {
     globalFilterType = (document.getElementById("select-type")! as HTMLSelectElement).value;
-     if (globalFilterType.trim() != ""){
-        
-    }
+    showClearBtn();
 });
 
 document.getElementById("search-input")!.addEventListener('input',async() => {
-    if ((document.getElementById("search-input")! as HTMLSelectElement).value != "")
-   {}
+showClearBtn();
 });
 
-document.getElementById("search-input")!.addEventListener('change',async() => {
-    trySearch();
+(document.getElementById("btn-clear") as HTMLButtonElement)!.addEventListener('click', async () => {
+    (document.getElementById("search-input")! as HTMLSelectElement).value = "";
+    (document.getElementById("select-type")! as HTMLSelectElement).selectedIndex = 0;
+    (document.getElementById("select-category")! as HTMLSelectElement).selectedIndex = 0;
+    renderRecipes(await getAllRecipes("",""));
+    globalFilterCategory = "";
+    globalFilterType = "";
+    (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none",true);
+
+});
+
+document.getElementById("search-input")!.addEventListener('keydown',async(e) => {
+        if (e.key == "Enter" ){
+            trySearch();
+        }
 });
 document.getElementById("btn-search")!.addEventListener( 'click',async() => {
         trySearch();
@@ -136,10 +144,10 @@ function printError(){
         document.getElementById("not-found")!.classList.toggle("d-none",false);
         let searchVal = (document.getElementById("search-input")! as HTMLInputElement).value;
        
-        let messageSearch = (searchVal == '' ? '': ` ("${searchVal}") `);
-        let messageCategory = globalFilterCategory == ''? '':` (kategória: ${globalFilterCategory}) `;
-        let messageType = globalFilterType== ''? '':` (típus: ${globalFilterType}) `;
-        document.getElementById("not-found-message")!.innerText = `Nincs találat. ${messageSearch} ${messageCategory} ${messageType}`
+        let messageSearch =  (searchVal == '' ? '': ` ("${searchVal}") `);
+        let messageCategory = globalFilterCategory == ''? '': ('<span class="bg-info">'+` ${globalFilterCategory} ` + "</span>");
+        let messageType =  globalFilterType== ''? '': ('<span class="bg-danger">' +` típus: ${globalFilterType} ` + "</span>");
+        document.getElementById("not-found-message")!.innerHTML = `Nincs találat. ${messageSearch} ${messageCategory} ${messageType}`
          document.getElementById("recipes-list")!.style.overflowY = "hidden";
         // loading screen kikapcs
 }
@@ -153,11 +161,48 @@ function noError(){
 
 if (!document.getElementById("recipes-list")!.className.includes("d-none")){
     try{
-        renderRecipes(await getAllRecipes(globalFilterCategory,globalFilterType));
+        let currentRecipes = await getAllRecipes(globalFilterCategory,globalFilterType);
+        renderRecipes(currentRecipes);
         noError();
+        loadOptions(currentRecipes);
     }
     catch(e){
         console.error(e);
         printError();
     }
+}
+
+function showClearBtn(){
+    let show = false;
+    if  ((document.getElementById("search-input")! as HTMLSelectElement).value == "" && 
+    (document.getElementById("select-type")! as HTMLSelectElement).value == "" &&
+    (document.getElementById("select-category")! as HTMLSelectElement).value == ""){
+        show = true;
+    }
+    (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none", show);
+}
+
+function loadOptions(recipes: Recipe[]){
+    let CategoriesAll:string[] = [];
+    let TypeAll : string[] = [];
+    recipes.forEach(recipe => {
+        if (!CategoriesAll.includes(recipe.kategoria)){
+            CategoriesAll.push(recipe.kategoria);
+        }
+        if (!TypeAll.includes(recipe.tipus)){
+            TypeAll.push(recipe.tipus);
+        }
+    });
+
+    CategoriesAll.sort();
+    TypeAll.sort();
+
+    CategoriesAll.forEach(category => {
+        (document.getElementById("select-category") as HTMLSelectElement)!.innerHTML += `<option value="cat-${category}">${category}</option>`;
+    });
+
+    TypeAll.forEach(type => {
+           (document.getElementById("select-type") as HTMLSelectElement)!.innerHTML += `<option value="type-${type}">${type}</option>`;
+    });
+
 }
