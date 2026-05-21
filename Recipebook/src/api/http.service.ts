@@ -1,13 +1,19 @@
 import type { Recipe } from "../models/recipe";
 import type { Ingredient } from "../models/ingredient";
 
-const BASE_URL = "https://localhost:3000";
+const BASE_URL = "http://localhost:3000";
 
 //------------------------------GET------------------------------
-export async function getAllRecipes(filter: string): Promise<Recipe[]> {
+export async function getAllRecipes(category_filter: string, type_filter:string): Promise<Recipe[]> {
     let url = BASE_URL + "/receptek";
-    if (filter != "") {
-        url = url + "?kategoria=" + filter;
+    if (category_filter != "" && type_filter == "") {
+        url = url + "?kategoria=" + category_filter;
+    }
+    else if(category_filter == "" && type_filter != ""){
+        url = url + "?tipus=" + type_filter;
+    }
+    else if(category_filter != "" && type_filter != ""){
+        url = url + "?kategoria=" + category_filter + "?tipus=" + type_filter;
     }
     const response = await fetch(url);
     if (!response.ok) throw new Error("Hiba lekéréskor");
@@ -22,14 +28,14 @@ export async function getAllIngredients(): Promise<Ingredient[]> {
 
 //------------------------------SEARCH------------------------------
 //SEARCH - nev alapjan 
-export async function searchRecipes(nev: string): Promise<Recipe[]> {
+export async function searchRecipesByFetch(nev: string): Promise<Recipe[]> {
     const url = new URL(BASE_URL + "/receptek");
     url.searchParams.append("search", nev);
     const response = await fetch(url);
     if (!response.ok) throw new Error("Hiba lekéréskor");
     return await response.json();
 }
-export async function searchIngredients(nev: string): Promise<Ingredient[]> {
+export async function searchIngredientsByFetch(nev: string): Promise<Ingredient[]> {
     const url = new URL(BASE_URL + "/hozzavalok");
     url.searchParams.append("search", nev);
     const response = await fetch(url);
