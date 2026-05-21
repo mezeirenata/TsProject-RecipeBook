@@ -59,6 +59,16 @@ function renderRecipes(recipes: Recipe[]){
         </div>`;
     }
             recipes.forEach(recipe => {
+                let timeString = "";
+                if (recipe.elkeszitesiIdoPerc >= 60){
+                    let hour = Math.floor(recipe.elkeszitesiIdoPerc / 60);
+                    let minutes = recipe.elkeszitesiIdoPerc - hour * 60; 
+                    timeString = minutes > 0 ? `${hour} óra ${minutes} perc` : `${hour} óra`;
+                }
+                else{
+                    timeString = `${recipe.elkeszitesiIdoPerc} perc`;
+                }
+                
                 const tdDiv = document.createElement('td');
                 tdDiv.className = "col-12  col-md-6 col-lg-4 mb-5";
                 const cardDiv = document.createElement('div');
@@ -71,7 +81,7 @@ function renderRecipes(recipes: Recipe[]){
                         <h5 class="card-title"><span class="fw-bold me-2">${recipe.nev}</span> <span class="text-muted fs-5"> #${(recipe.id)}</span></h5>
                         <p>
                         <i class="bi fs-6 bi-clock-history"></i>
-                        <span class="text-muted fs-6 me-2">${(recipe.elkeszitesiIdoPerc)} perc </span>
+                        <span class="text-muted fs-6 me-2">${(timeString )} </span>
                         </p>
                     </div>
                     <div class="d-flex justify-content between mb-5">

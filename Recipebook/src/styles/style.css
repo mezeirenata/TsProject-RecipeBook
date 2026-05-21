@@ -81,7 +81,7 @@ background-image:
 
 .card-recipe:hover{
    transition: 0.2s ease-in-out ;
-   background-color: rgba(199, 199, 199, 0.163);
+   background-color: rgb(238, 236, 236);
 
 }
 .card-recipe{
