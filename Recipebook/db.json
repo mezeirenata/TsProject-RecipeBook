@@ -1,9 +1,10 @@
+
 {
     "receptek": [
         {
             "id": "1",
             "nev": "Paradicsomos tészta",
-            "url": "https://pelda.hu/paradicsomos-teszta",
+            "url": "",
             "elkeszitesiIdoPerc": 25,
             "elkeszites": [
                 "Forralj vizet egy nagy lábasban.",
@@ -11,9 +12,34 @@
                 "Készíts paradicsomos szószt.",
                 "Keverd össze a tésztát a szósszal."
             ],
-            "tipus": "fozes",
-            "kategoria": "ebed",
-            "kepUrl": "https://pelda.hu/kepek/paradicsomos-teszta.jpg",
+            "tipus": "főzés",
+            "kategoria": "főétel",
+            "kepUrl": "https://kep.cdn.indexvas.hu/1/0/2908/29088/290887/29088759_520faee71c28c28eb8f97c89398f62ac_wm.jpg",
+            "hozzavalok": [
+                {
+                    "hozzavalo": {
+                        "id": "1",
+                        "nev": "Paradicsom",
+                        "egysegAr": 799
+                    },
+                    "quantity": 2
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "nev": "Paradicsomos leves",
+            "url": "",
+            "elkeszitesiIdoPerc": 75,
+            "elkeszites": [
+                "Forralj vizet egy nagy lábasban.",
+                "Főzd meg a tésztát 8-10 perc alatt.",
+                "Készíts paradicsomos szószt.",
+                "Keverd össze a tésztát a szósszal."
+            ],
+            "tipus": "főzés",
+            "kategoria": "főétel",
+            "kepUrl": "https://kep.cdn.indexvas.hu/1/0/2908/29088/290887/29088759_520faee71c28c28eb8f97c89398f62ac_wm.jpg",
             "hozzavalok": [
                 {
                     "hozzavalo": {
