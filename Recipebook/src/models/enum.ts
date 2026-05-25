@@ -19,4 +19,9 @@ export const ReceiptType = {
     Instant: 'Instant'
 } as const;
 
-
+export const fileExtensions = {
+    png: 'png',
+    jpg: 'jpg',
+    jpeg: 'jpeg',
+    webp: 'webp'
+} as const;

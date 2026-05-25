@@ -13,7 +13,7 @@ export async function getAllRecipes(category_filter: string, type_filter:string)
         url = url + "?tipus=" + type_filter;
     }
     else if(category_filter != "" && type_filter != ""){
-        url = url + "?kategoria=" + category_filter + "?tipus=" + type_filter;
+        url = url + "?kategoria=" + category_filter + "&tipus=" + type_filter;
     }
     const response = await fetch(url);
     if (!response.ok) throw new Error("Hiba lekéréskor");
