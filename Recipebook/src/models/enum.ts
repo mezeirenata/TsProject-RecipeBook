@@ -1,4 +1,4 @@
-export const ReceiptCategory = {
+export const RecipeCategory = {
     Leves: 'Leves',
     Snack: 'Snack',
     Desszert: 'Desszert',
@@ -10,7 +10,7 @@ export const ReceiptCategory = {
     Reggeli: 'Reggeli'
 } as const;
 
-export const ReceiptType = {
+export const RecipeType = {
     Grillezés: 'Grillezés',
     Fagyasztás: 'Fagyasztás',
     Sütés: 'Sütés',

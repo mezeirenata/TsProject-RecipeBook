@@ -43,6 +43,7 @@ body{
   font-size: 25px;
 }
 
+
 .bg-brown{
   background-color:rgb(27, 23, 23)!important;
 }
@@ -53,6 +54,10 @@ body{
 
 .border-start-radius{
    border-top-right-radius:0 ;border-bottom-right-radius:0;border-bottom-left-radius: 1vh;border-top-left-radius:1vh;
+}
+
+.border-error{
+  border-color:rgb(252, 156, 156)!important;
 }
 
 #recipes-list{

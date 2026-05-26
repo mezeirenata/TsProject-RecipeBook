@@ -11,6 +11,7 @@
   </head>
   <body data-bs-theme="light" class="bg-light">
 
+<!--top navbar  -->
   <div class="container-fluid w-100 mx-0  bg-brown ">
       <nav class="navbar navbar-expand-lg pb-0 ">
         <div class="container my-2 ">
@@ -31,16 +32,17 @@
         </div>
       </nav>
   </div>
+<!-- background -->
   <div class="container-fluid shadow" id="navbar">
       
   </div>
-
+<!-- bottom navbar -->
   <div class="container-fluid  mb-5 shadow py-2 " id="functionable-navbar" >
               <div class="container">
                 <nav class="navbar navbar-expand-lg ">
                   <div class="container-fluid">
                   <form class="d-flex mx-1" role="search" onsubmit="event.preventDefault()">
-                    <input class="form-control py-2 border-start-radius" id="search-input" type="search" placeholder="Keresés vagy #id.." aria-label="Search"/>
+                    <input class="form-control py-2 border-start-radius" id="search-input" type="search" placeholder="Keresés.." aria-label="Search"/>
                     <button class="btn border-tertiary border-1 text-muted bg-body-tertiary border-end-radius px-3" id="btn-search"  type="button"><i class="bi bi-search"></i></button>
                   </form>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filters" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,22 +76,23 @@
               </div>
   </div>
 
-  <div class="container mt-5 d-none " id="zero-found">
+<!-- recipes empty -->
+  <div class="container mt-5 d-none" id="zero-found">
     <div class="row">
       <h3 class="fw-bold text-center mt-3">Még nincs feltöltött recept.</h3>
       <h5 class="text-center mb-3 text-muted">Töltse fel az első receptet az alábbi gombra kattintva!</h5>
-      <button data-bs-toggle="modal" data-bs-target="#projectModal" class="plus-btn btn mx-auto col-12 col-md-6 btn-outline-success  border-success border-3  alert alert-secondary shadow" >
+      <button data-bs-toggle="modal" data-bs-target="#recipe-modal" class="plus-btn btn mx-auto col-12 col-md-6 btn-outline-success  border-success border-3  alert alert-secondary shadow" >
       <h1 class="my-auto"><i class="bi bi-plus-circle text-success"></i></h1>
       </button>
 
     </div>
   </div>  
-
+<!-- recipes list -->
   <div class="container mb-5" >
     <div class="row my-5" id="recipes-list">
     </div>
   </div>
-  
+<!-- no matches found -->
   <div class="container mt-2 col-12 mx-auto col-lg-4 d-none" id="not-found">
     <div class="card  mx-auto mb-3 row" >
     <div class="card-header bg-secondary pt-3 pb-2">
@@ -114,44 +117,122 @@
 
   
   </div>
-  <div class="modal fade" id="projectModal" tabindex="-1">
-        <div class="modal-dialog">
-            <form id="project-form" class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Projekt hozzáadása</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Projekt neve</label>
-                        <input type="text" id="p-name" class="form-control" required>
+
+<!-- hozzáadás gomb -> modal -->
+  <div class="modal fade " id="recipe-modal" tabindex="-1" >
+        <div class="modal-dialog ">
+            <form id="recipe-form" class="modal-content">
+                <div class="modal-header  p-0 d-flex flex-wrap bg-white">
+                    <!-- images/placeholder.png -->
+                    <img id="modal-header-image" style="max-height: 350px;align-content: center;width: 100%;" class=" object-fit-cover rounded-top text-center bg-secondary-subtle text-muted fw-bold " src="images/placeholder.png"  alt="Recept indexképe" >
+                    <button id="btn-close-modal"  class="btn-close-modal btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal">
+                    </button>
+                      <div class="my-2 ms-3 w-50 d-flex">
+                          <input type="text" id="p-name" placeholder="Recept neve "  class=" form-control" ><span class="ms-1 text-danger">*</span>
+                      </div> 
+                      
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Ügyfél</label>
-                        <input type="text" id="p-client" class="form-control" required>
+                    <div class="my-1 mx-3 alert-dismissible show fade alert alert-danger" role="alert" id="modal-alert">
+                      <p id="modal-alert-content" class="pb-0 mb-0">Hiba történt.</p>
+                      <div  class="btn-close my-0" id="alert-btn-close" aria-label="Close"></div>
                     </div>
-                    <div class="row mb-3">
+                <div class="modal-body bg-light overflow-y-auto " style="height:400px;">
+              
+
+                    <div class="row mb-4 mt-3">
                         <div class="col">
-                            <label class="form-label">Határidő</label>
-                            <input type="date" id="p-deadline" class="form-control" required>
-                        </div>
-                        <div class="col">
-                            <label class="form-label">Kategória</label>
-                            <select id="p-cat" class="form-select">
-                                <option value="Web">Web</option>
-                                <option value="Design">Design</option>
-                                <option value="Marketing">Marketing</option>
+                            <label class="form-label mb-1 fw-bold">Kategória <span class="text-danger">*</span></label>
+                            <select id="select-cat" class="form-select ">
+                                <option value="" selected></option> 
                             </select>
                         </div>
+                        <div class="col">
+                            <label class="form-label  mb-1 fw-bold" for="select-type">Elkészítés módja <span class="text-danger">*</span></label>
+                            <select id="select-type-x" class="form-select">
+                                  <option value="" selected></option> 
+                            </select>
+                        </div>
+                     
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Költségvetés (Ft)</label>
-                        <input type="number" id="p-budget" class="form-control" required>
+
+                    <div class="mb-4">
+                        <label for="" class="mb-1 fw-bold"><i class="bi fs-6 bi-clock-history my-auto me-2"></i>Elkészítési idő <span class="text-danger">*</span></label>
+                        <div class="row w-100">
+                            <div class="col d-flex flex-nowrap w-100 me-4">
+                                <input type="number" id="p-hour" min="0" placeholder="0" class="form-control w-50"  >
+                                <label for="" class="my-auto w-50 text-center">óra</label>
+                            </div> 
+                            <div class="col d-flex flex-nowrap  w-100">
+                                <input type="number" id="p-minute" min="0" placeholder="0" class=" form-control w-50"  >
+                                <label for="" class="my-auto w-50 text-center">perc</label>
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
-                    <button type="submit" class="btn btn-primary" id="save-project">Mentés</button>
+                    
+
+                    <div class="mt-4">
+                      <label for="" class="fw-bold ms-1 mb-1">Kép feltöltése</label>
+                        <div class="d-flex flex-nowrap">
+                            <div class="my-auto  px-3 py-2 bg-secondary-subtle" style="width:15%;border-bottom-left-radius:1vh ;border-top-left-radius: 1vh;"> URL</div>    
+                            <input type="search" id="p-imageurl"  placeholder="https://pelda.png" style="border-bottom-left-radius:0vh ;border-top-left-radius: 0vh;" class="form-control py-1" >
+                        </div>
+                    </div>
+
+                    <div class="form-text text-start ms-1 mb-5">
+                        <!-- ha üres-> tovább enged, placeholder az src, ha nem üres az input de rossz akkor nem enged tovább -->
+                        PNG, JPG, JPEG vagy WEBP kép URL
+                    </div>
+
+                    <!-- hozzávalók -->
+                    <div class="mb-4">
+                        <div class="d-flex">
+                            <label for="select-ingredients" class="mb-1 fw-bold">Hozzávalók<span class="ms-1 text-danger">*</span></label>
+                            <span class="text-end ms-auto badge bg-secondary  me-1 overflow-x-auto mb-1" for="" style="max-width: 100%;">összesen: <span id="sum-price" >0</span> Ft</span>
+                            
+                        </div>
+                        <div class="navbar ">
+                          <div class="w-75 d-flex flex-nowrap">
+                            <select name="select-ingredients" class="form-select mb-2 py-2 w-75" style="border-top-right-radius: 0vh;border-bottom-right-radius: 0vh;" id="ingredients-list">
+                                <option value="" selected>Válasszon hozzávalót!</option>
+                                <option value="" ></option>
+                            </select>
+                            <div class="btn btn-outline-success mb-2 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-ingredient"><i class="bi bi-plus-lg "></i></div> 
+
+                          </div>
+                            <button class="navbar-toggler mb-auto py-1"  data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse show navbar-collapse" id="navbarNavAltMarkup">
+                                <ul class="list-group overflow-y-auto"  id="selected-ingredients" style="max-height:105px;">
+                                  </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- lépések -->
+                    <div class="mb-2">
+                        <label for="input-step" class="fw-bold">Elkészítés lépései<span class="ms-1 text-danger">*</span></label>
+                        <div class="navbar mt-1">
+                            <div class="mb-1 d-flex flex-nowrap" style="width: 75%;">
+                                <input type="search " placeholder="pl. Tegyél fel egy fazék vizet forrni." name="select-ingredients" class="form-control py-2  mb-1 w-75 me-0" id="input-step" style="border-top-right-radius: 0vh;border-bottom-right-radius: 0vh;">
+                                <div class="btn btn-outline-success mb-1 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-step"><i class="bi bi-plus-lg "></i></div> 
+                            </div>
+                            <button class="navbar-toggler mb-auto py-1" data-bs-toggle="collapse" data-bs-target="#steps" aria-controls="steps" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse show " id="steps">
+                                <ol class="list-group list-group-numbered overflow-y-auto py-2 "  id="steps-list" style="max-height: 105px;"  >
+                                </ol>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>          
+                <div class="modal-footer bg-white">
+                        <button class="btn btn-outline-secondary btn-close-modal " data-bs-dismiss="modal">Mégse</button>
+                        <!-- változni fog a szöveg: "Hozzáadás" | "Mentés" -->
+                        <div class="btn btn-success" id="save-recipe">Mentés</div>
                 </div>
             </form>
         </div>

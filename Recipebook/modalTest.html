@@ -186,25 +186,16 @@
   </div>
   
 <script>
-
-    window.addEventListener('load', () => {
-        (document.getElementById("button")).click(); 
-        settime();
-    });
     document.getElementById("button").addEventListener('click',() => {
-           settime(); 
-
+        settime(); 
     });
     // + hozzáadás button click (amikor lépést ad hozzá) 
-
-function settime(){
- setTimeout(() => {
-    
-            let container = document.getElementById("steps-list");
-            container.scrollTop = container.scrollHeight;
-    
-    }, 500);  
-}
+    function settime(){
+        setTimeout(() => {            
+                let container = document.getElementById("steps-list");
+                container.scrollTop = container.scrollHeight;
+            }, 500);  
+    }
     
 </script> 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

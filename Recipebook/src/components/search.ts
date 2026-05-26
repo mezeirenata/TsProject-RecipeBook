@@ -7,24 +7,18 @@ export async function searchRecipes( category:string = "", type:string = ""):Pro
     let recipes: Recipe[] = await getAllRecipes(category,type);
     let returnableRecipes: Recipe[] = [];
     recipes.forEach(recipe => {
-        if (search.value.startsWith("#")){
-            if (("#" + recipe.id).toLowerCase() == search.value.toLowerCase() || recipe.nev.toLowerCase().includes(search.value.toLowerCase())){
-                returnableRecipes.push(recipe); 
-                console.log(recipe);
-            }
-        }
-        else{
+        // if (search.value.startsWith("#")){
+        //     if (("#" + recipe.id).toLowerCase() == search.value.toLowerCase() || recipe.nev.toLowerCase().includes(search.value.toLowerCase())){
+        //         returnableRecipes.push(recipe); 
+        //         console.log(recipe);
+        //     }
+        // }
+        // else{
             if (recipe.nev.toLowerCase().includes(search.value.toLowerCase())){
             returnableRecipes.push(recipe);
             }     
-        }
+        // }
     });
-                // if (returnableRecipes.length > 0){
-                //     return returnableRecipes;
-                // }
-                // else{
-                //     throw new Error("Nincs találat");
-                // }
     return returnableRecipes;
     }
         
