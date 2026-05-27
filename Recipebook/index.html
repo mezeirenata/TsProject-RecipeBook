@@ -125,7 +125,7 @@
                 <div class="modal-header  p-0 d-flex flex-wrap bg-white">
                     <!-- images/placeholder.png -->
                     <img id="modal-header-image" style="max-height: 350px;align-content: center;width: 100%;" class=" object-fit-cover rounded-top text-center bg-secondary-subtle text-muted fw-bold " src="images/placeholder.png"  alt="Recept indexképe" >
-                    <button id="btn-close-modal"  class="btn-close-modal btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal">
+                    <button id="btn-close-modal"  class="btn-close-modal btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" style="opacity: 0%;">
                     </button>
                       <div class="my-2 ms-3 w-50 d-flex">
                           <input type="text" id="p-name" placeholder="Recept neve "  class=" form-control" ><span class="ms-1 text-danger">*</span>
@@ -230,7 +230,7 @@
                     </div>
                 </div>          
                 <div class="modal-footer bg-white">
-                        <button class="btn btn-outline-secondary btn-close-modal " data-bs-dismiss="modal">Mégse</button>
+                        <button class="btn btn-outline-secondary btn-close-modal " id="cancel-modal-btn" data-bs-dismiss="modal">Mégse</button>
                         <!-- változni fog a szöveg: "Hozzáadás" | "Mentés" -->
                         <div class="btn btn-success" id="save-recipe">Mentés</div>
                 </div>
