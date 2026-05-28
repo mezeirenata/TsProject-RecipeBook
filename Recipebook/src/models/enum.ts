@@ -25,3 +25,5 @@ export const fileExtensions = {
     jpeg: 'jpeg',
     webp: 'webp'
 } as const;
+
+// mértékegység enum cl, g, db (l, dl, kg, dkg)

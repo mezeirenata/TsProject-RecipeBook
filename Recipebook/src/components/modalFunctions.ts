@@ -280,7 +280,7 @@ export function renderIngredients(ingredients: Ingredient[]){
 
                 let label = document.createElement('label');
                 label.className = "me-2 my-auto";
-                label.innerText = "mennyiség (db/g): ";
+                label.innerText = `mennyiség (${ingredient.mertekegyseg}): `;
                 quantityDiv.appendChild(label);
                 quantityDiv.innerHTML += `<input type="number" placeholder="0" min="0" class="form-control input-quantity" id="input-quantity-${ingredient.id}" style="width: 35%;">`;
 
@@ -296,7 +296,7 @@ export function renderIngredients(ingredients: Ingredient[]){
 
 //// törlés
                 document.getElementById("cancel-ingredient-" + ingredient.id)!.addEventListener('click', () => {
-                    let tobeDeletedLi = document.getElementById('li-' + ingredient.id);
+                    let tobeDeletedLi = document.getElementById('list-ingredient-' + ingredient.id);
                     selectedIngredients.removeChild(tobeDeletedLi!);
                     let newlySelectedIds: string[] = [];
                     selectedIds.forEach(id =>{
