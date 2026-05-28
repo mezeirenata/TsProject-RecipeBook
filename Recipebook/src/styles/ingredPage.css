@@ -1,0 +1,11 @@
+#addIngredientCard {
+  width: 95%;
+  margin: 10px auto;
+  background-color: antiquewhite;
+}
+
+#ingredientCardBody {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
