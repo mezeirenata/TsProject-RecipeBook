@@ -10,10 +10,10 @@
 import './styles/style.css';
 import './styles/ingredients.css'
 import type { Recipe } from './models/recipe';
-import { deleteRecipe, getAllRecipes} from './api/http.service';
+import { deleteRecipe, getAllRecipes, searchRecipeById} from './api/http.service';
 import { searchRecipes } from './components/search';
 import { backgroundScroll, gainFocusBack, getTimeString, handleEnteronModal} from './components/other';
-import {loadOptions, plusbuttonsEventListener } from './components/modalFunctions';
+import {loadOptions, openDetailsWindow, plusbuttonsEventListener } from './components/modalFunctions';
 
 let globalFilterCategory = "";
 let globalFilterType = "";
@@ -53,7 +53,8 @@ function renderRecipes(recipes: Recipe[]){
             </div>
             <hr>
             <div class="d-flex justify-content-between" >
-                <div class="btn btn-success w-100 me-2 fw-bold " id="details-${recipe.id}">Részletek</div>
+            
+                <button class="btn btn-success w-100 me-2 fw-bold " data-bs-toggle="modal" data-bs-target="#recipe-modal" id="details-${recipe.id}">Részletek</button>
                 <div class="btn btn-danger" id="delete-${recipe.id}"><i class="bi bi-trash3"></i></div>
             </div>
         </div>
@@ -71,7 +72,18 @@ function renderRecipes(recipes: Recipe[]){
                 await trySearch();
             }
         });
-        // részletek
+    // részletek
+        document.getElementById(`details-${recipe.id}`)!.addEventListener('click', async() => {
+            try{
+                let selectedRecipe:Recipe = await searchRecipeById(recipe.id);
+                await openDetailsWindow(selectedRecipe); 
+            }
+            catch(e){
+                // errorprint
+                console.error(e);
+            }
+        });
+        
         // kedvencek (?) 
     });
 }
