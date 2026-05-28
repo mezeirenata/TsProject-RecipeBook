@@ -13,7 +13,7 @@ export async function getAllRecipes(category_filter: string, type_filter:string)
         url = url + "?tipus=" + type_filter;
     }
     else if(category_filter != "" && type_filter != ""){
-        url = url + "?kategoria=" + category_filter + "?tipus=" + type_filter;
+        url = url + "?kategoria=" + category_filter + "&tipus=" + type_filter;
     }
     const response = await fetch(url);
     if (!response.ok) throw new Error("Hiba lekéréskor");
@@ -77,7 +77,7 @@ export async function deleteIngredient(id: string){
 }
 
 //------------------------------POST/CREATE------------------------------
-export async function uploadRecipe(newRecipe: Recipe): Promise<Recipe> 
+export async function uploadRecipe(nev:string,elkeszitesiIdoPerc:Number, elkeszites:string[],tipus:string,kategoria:string,kepUrl:string,hozzavalok:{hozzavalo: Ingredient,quantity:Number}[]): Promise<Recipe> 
 {
     let url = BASE_URL + "/receptek";
     const response = await fetch(url, {
@@ -86,9 +86,12 @@ export async function uploadRecipe(newRecipe: Recipe): Promise<Recipe>
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(newRecipe)
+        body: JSON.stringify({nev:nev,elkeszitesiIdoPerc:elkeszitesiIdoPerc,elkeszites:elkeszites,tipus:tipus,kategoria:kategoria,kepUrl:kepUrl,hozzavalok:hozzavalok}),
     });
     if (!response.ok) throw new Error("Hiba feltöltéskor");
+
+
+
     return await response.json();
 }
 export async function uploadIngredient(newIngredient: Ingredient): Promise<Ingredient>

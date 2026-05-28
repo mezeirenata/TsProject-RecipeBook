@@ -3,29 +3,29 @@ body{
   font-family: Arial, Helvetica, sans-serif;
   cursor: default;
   overflow-x: hidden;
-      background-color: #fff5f5;
-background-image: 
-  repeating-linear-gradient( 
-  0deg, rgba(255, 120, 120, 0.10) 0px,
-  rgba(255, 120, 120, 0.10) 10px,
-  transparent 2px, transparent 40px ),
-  
-   repeating-linear-gradient( 
-    90deg, rgba(255, 120, 120, 0.10) 0px,
+  background-color: #fff5f5;
+  background-image: 
+    repeating-linear-gradient( 
+    0deg, rgba(255, 120, 120, 0.10) 0px,
     rgba(255, 120, 120, 0.10) 10px,
-    transparent 2px,
-    transparent 40px ), 
+    transparent 2px, transparent 40px ),
+    
+    repeating-linear-gradient( 
+      90deg, rgba(255, 120, 120, 0.10) 0px,
+      rgba(255, 120, 120, 0.10) 10px,
+      transparent 2px,
+      transparent 40px ), 
 
-    repeating-linear-gradient( 45deg, rgba(255, 180, 180, 0.06) 0px,
-    rgba(255, 180, 180, 0.06) 1px, 
-    transparent 1px, 
-    transparent 12px );
+      repeating-linear-gradient( 45deg, rgba(255, 180, 180, 0.06) 0px,
+      rgba(255, 180, 180, 0.06) 1px, 
+      transparent 1px, 
+      transparent 12px );
 }
 
 #navbar{
   background-image: url('/images/background.png');
   background-size: cover;
-  background-position-y: center;
+  background-position: center;
   height: 400px;
   background-repeat: no-repeat;
   /* transition:height 0.4s ease-in; */
@@ -43,6 +43,7 @@ background-image:
   font-size: 25px;
 }
 
+
 .bg-brown{
   background-color:rgb(27, 23, 23)!important;
 }
@@ -53,6 +54,10 @@ background-image:
 
 .border-start-radius{
    border-top-right-radius:0 ;border-bottom-right-radius:0;border-bottom-left-radius: 1vh;border-top-left-radius:1vh;
+}
+
+.border-error{
+  border-color:rgb(252, 156, 156)!important;
 }
 
 #recipes-list{
@@ -66,15 +71,15 @@ background-image:
   cursor:pointer;
 }
 
-#plus-btn:hover h1{
+.plus-btn:hover h1{
   transition: 0.2s ease-in-out ;
   font-size:55px!important;
 }
-#plus-btn:hover h1 i{
+.plus-btn:hover h1 i{
   color:white!important;
 }
 
-#plus-btn h1{
+.plus-btn h1{
     font-size:45px;
     transition: 0.2s ease-in-out ;
 }
@@ -93,7 +98,7 @@ background-image:
 }
 
 
-
+/* reszponzivitás */
 @media(max-width:3000px){
     #functionable-navbar{
         position: absolute;
@@ -114,7 +119,11 @@ background-image:
  
 }
 @media(max-width:1400px){
-
+  @media(min-width:1200px){
+    .card-recipe{
+      height:500px!important;
+    }
+  }
 }
 @media(max-width:1200px){
 

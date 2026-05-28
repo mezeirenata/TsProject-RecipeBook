@@ -3,7 +3,6 @@ import type { Ingredient } from "./ingredient";
 export interface Recipe{
     id: string;
     nev: string;
-    url: string;
     elkeszitesiIdoPerc: number;
     elkeszites: string[];
     tipus: string;

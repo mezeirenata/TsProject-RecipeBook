@@ -2,5 +2,6 @@ export interface Ingredient
 {
     id: string;
     nev: string;
-    egysegAr: number;
+    egysegAr: number,
+    mertekegyseg:string;
 }
