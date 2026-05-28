@@ -10,7 +10,7 @@ export interface Recipe{
     kepUrl: string;
     hozzavalok: {
         hozzavalo: Ingredient,
-        quantity: number
+        mennyiseg: number
     }[];
 }
 

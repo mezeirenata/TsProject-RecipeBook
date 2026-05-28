@@ -119,7 +119,7 @@
   </div>
 
 <!-- hozzáadás gomb -> modal -->
-  <div class="modal fade " id="recipe-modal" tabindex="-1" >
+  <div class="modal fade  " id="recipe-modal" tabindex="-1" >
         <div class="modal-dialog ">
             <form id="recipe-form" class="modal-content">
                 <div class="modal-header   p-0 d-flex flex-wrap bg-dark">
@@ -127,12 +127,21 @@
                     <img id="modal-header-image" style="max-height: 350px;align-content: center;width: 100%;" class=" object-fit-cover rounded-top text-center bg-secondary-subtle text-muted fw-bold " src="images/placeholder.png"  alt="Recept indexképe" >
                     <button id="btn-close-modal"  class="btn-close-modal btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" style="opacity: 0%;">
                     </button>
+                      <button  class="btn-close-modal details-display btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" >
+                    </button>
                       <div class="my-2 ms-3 w-50 d-flex d-none new-display">
                           <input type="text" id="p-name" placeholder="Recept neve "  class=" form-control " ><span class="ms-1 text-danger new-display">*</span>
                       </div> 
-                         <div class="my-2 ms-3 w-100 d-flex d-none details-display justicy-content-between" >
+                         <div class="my-2 ms-3 w-100 d-flex d-none details-display  justicy-content-between" >
                           <p  id="details-recipe-name"  class=" text-white my-auto fw-bold fs-6" ></p>
                           <div class="btn btn-warning ms-auto me-3" id="edit-btn"><i class="bi bi-pencil"></i></div>
+
+                        </div> 
+                          <div class="my-2 ms-3 w-100 d-flex d-none edit-display  justicy-content-between" >
+                            <p  id="details-recipe-name"  class=" text-white my-auto fw-bold fs-6" ></p>
+                          
+                            <div class="btn btn-outline-success ms-auto me-3" id="save-edit-btn">Mentés</div>
+                            <div class="btn btn-outline-danger ms-auto me-3" id="cancel-edit-btn">Mégse</div>
                         </div> 
                     </div>
                     <div class="my-1 mx-3 alert-dismissible show fade alert alert-danger" role="alert" id="modal-alert">
@@ -155,22 +164,23 @@
                                   <option value="" selected></option> 
                             </select>
                         </div>
-                        <div class="col details-display">
-                          <span class="badge fs-6 bg-info text-white" id="recipe-category-badge"></span>
+                        <div class="col details-display d-flex pt-2  pb-3  mx-2 ">
+                          <span class="badge me-2 fs-6 bg-info text-white" id="recipe-category-badge"></span>
                           <span class="badge fs-6 bg-warning text-dark" id="recipe-type-badge"></span>
+                          <span class="ms-auto"><i class="bi fs-6 bi-clock-history my-auto me-2"></i><span id="details-time" class="fs-6"></span></span>
                         </div>
                      
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4 new-display">
                         <label for="" class="mb-1 fw-bold"><i class="bi fs-6 bi-clock-history my-auto me-2"></i>Elkészítési idő <span class="text-danger new-display">*</span></label>
-                        <div class="row w-100">
+                        <div class="row w-100 ">
                             <div class="col d-flex flex-nowrap w-100 me-4">
-                                <input type="number" id="p-hour" min="0" placeholder="0" class="new-display form-control w-50"  >
+                                <input type="number" id="p-hour" min="0" placeholder="0" class=" form-control w-50"  >
                                 <label for="" class="my-auto w-50 text-center">óra</label>
                             </div> 
                             <div class="col d-flex flex-nowrap  w-100">
-                                <input type="number" id="p-minute" min="0" placeholder="0" class="new-display form-control w-50"  >
+                                <input type="number" id="p-minute" min="0" placeholder="0" class=" form-control w-50"  >
                                 <label for="" class="my-auto w-50 text-center">perc</label>
 
                             </div>
@@ -195,19 +205,19 @@
                     <div class="mb-4">
                         <div class="d-flex">
                             <label for="select-ingredients" class="mb-1 fw-bold">Hozzávalók<span class="ms-1 text-danger new-display">*</span></label>
-                            <span class="text-end ms-auto badge bg-secondary  me-1 overflow-x-auto mb-1" for="" style="max-width: 100%;">összesen: <span id="sum-price" >0</span> Ft</span>
+                            <span class="text-end ms-auto badge bg-secondary me-1 fs-6 overflow-x-auto mb-1" for="" style="max-width: 100%;">összesen: <span id="sum-price" >0</span> Ft</span>
                             
                         </div>
                         <div class="navbar ">
+                          <!-- új hozzávaló -->
                           <div class="w-75 d-flex flex-nowrap new-display">
                             <select name="select-ingredients" class="form-select mb-2 py-2 w-75" style="border-top-right-radius: 0vh;border-bottom-right-radius: 0vh;" id="ingredients-list">
                                 <option value="" selected>Válasszon hozzávalót!</option>
                                 <option value="" ></option>
                             </select>
-                            <div class="btn btn-outline-success mb-2 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-ingredient"><i class="bi bi-plus-lg "></i></div> 
-
+                            <div class="btn btn-outline-success mb-2 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-ingredient"><i class="bi bi-plus-lg"></i></div> 
                           </div>
-                            <div class="navbar-toggler mb-auto py-1"  data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
+                            <div class="navbar-toggler mb-auto py-1 new-display"  data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
                             <span class="navbar-toggler-icon"></span>
                             </div>
                             <div class="collapse show navbar-collapse" id="navbarNavAltMarkup">
@@ -225,21 +235,24 @@
                                 <input type="search " placeholder="pl. Tegyél fel egy fazék vizet forrni." name="select-ingredients" class="form-control py-2  mb-1 w-75 me-0" id="input-step" style="border-top-right-radius: 0vh;border-bottom-right-radius: 0vh;">
                                 <div class="btn btn-outline-success mb-1 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-step"><i class="bi bi-plus-lg "></i></div> 
                             </div>
-                            <div class="navbar-toggler mb-auto py-1" data-bs-toggle="collapse" data-bs-target="#steps" aria-controls="steps" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
+                            <div  class="new-display navbar-toggler mb-auto py-1" data-bs-toggle="collapse" data-bs-target="#steps" aria-controls="steps" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
                             <span class="navbar-toggler-icon"></span>
                             </div>
                             <div class="collapse navbar-collapse show " id="steps">
-                                <ol class="list-group list-group-numbered overflow-y-auto py-2 "  id="steps-list" style="max-height: 105px;"  >
+                                <ol class="list-group list-group-numbered overflow-y-auto py-2 "  id="steps-list" style="max-height: 120px;"  >
                                 </ol>
                             </div>
 
                         </div>
                     </div>
                 </div>          
-                <div class="modal-footer bg-white">
-                        <button class="btn btn-outline-secondary btn-close-modal new-display" id="cancel-modal-btn" data-bs-dismiss="modal">Mégse</button>
+                <div class="model-footer detail-display">
+                  <p></p>
+                </div>
+                <div class="modal-footer  bg-white new-display">
+                        <button class="btn btn-outline-secondary btn-close-modal " id="cancel-modal-btn" data-bs-dismiss="modal">Mégse</button>
                         <!-- változni fog a szöveg: "Hozzáadás" | "Mentés" -->
-                        <div class="btn btn-success new-display" id="save-recipe">Mentés</div>
+                        <div class="btn btn-success " id="save-recipe">Mentés</div>
                 </div>
             </form>
         </div>

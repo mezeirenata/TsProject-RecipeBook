@@ -18,9 +18,10 @@
           "hozzavalo": {
             "id": "1",
             "nev": "Paradicsom",
-            "egysegAr": 799
+            "egysegAr": 799,
+            "mertekegyseg":"db"
           },
-          "quantity": 2
+          "mennyiseg": 2
         }
       ]
     },
@@ -42,9 +43,10 @@
           "hozzavalo": {
             "id": "1",
             "nev": "Paradicsom",
-            "egysegAr": 799
+            "egysegAr": 799,
+            "mertekegyseg": "db"
           },
-          "quantity": 2
+          "mennyiseg": 2
         }
       ]
     }

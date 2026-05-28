@@ -4,6 +4,7 @@ import type { Ingredient } from "../models/ingredient";
 import type { Recipe } from "../models/recipe";
 import { settime } from "./other";
 
+//mentés
 function checkFields(): boolean{
     let modalAlert = document.getElementById("modal-alert")!
     let modalAlertContent = document.getElementById("modal-alert-content")!
@@ -175,47 +176,33 @@ export async function saveRecipe(){
     }
     
 }
-export function handleImageInputs(){
-    let inputImage = document.getElementById("p-imageurl")! as HTMLInputElement;
-    let image = document.getElementById("modal-header-image")! as HTMLImageElement;
-    inputImage.addEventListener('input',() => {
-        let splitted = inputImage.value.split('.');
-        inputImage.classList.toggle("border-error",false);
+//
 
-        if (inputImage.value != ""){
-            let fitExtension = false;
+// hozzávalók megjelenítése
+function renderIngredientsDetails(ingredients: {hozzavalo: Ingredient,mennyiseg:number}[]){
+    let ingredientList = document.getElementById('selected-ingredients')! as HTMLUListElement;
+    ingredientList.classList.toggle('show',true);
+    ingredientList.innerHTML = "";
+    ingredients.forEach(ingredientElement => {
+            let li = document.createElement('li');
+            li.id = "list-ingredient-" + ingredientElement.hozzavalo.id;
+            li.className = "list-group-item d-flex flex-wrap ingredient-item pb-3 mt-1 ";
 
-            Object.values(fileExtensions).forEach(extension => {
-                if (extension == splitted[splitted.length -1]){
-                    fitExtension = true;
-                }
-            });
+            let firstRow = document.createElement('div');
+            firstRow.className = "my-auto d-flex my-auto flex-nowrap w-100 justify-content-between fw-bold mb-1";
 
-            if (!fitExtension || !inputImage.value.includes('https')){
-                image.src = "/images/placeholder.png";
-                inputImage.classList.toggle("border-error",true);
-            }
-            else{
-                inputImage.classList.toggle("border-error",false);
-            }
-        }
-        else{
-            inputImage.classList.toggle("border-error",true);
-            image.src = "/images/placeholder.png";
-        }
-    });
+            let p = document.createElement('p');
+            p.className = "mb-0 overflow-x-auto w-50 text-success my-auto";
+            p.innerText = ingredientElement.hozzavalo.nev;
+            firstRow.appendChild(p);
+            firstRow.innerHTML += `<span class="w-25 mx-2 my-auto  fw-bold">${ingredientElement.mennyiseg} ${ingredientElement.hozzavalo.mertekegyseg}</span>`;
+            firstRow.innerHTML += `<span for="" class="w-25 ms-auto mt-auto badge p-2  bg-secondary-subtle text-dark">teljes ár: ${ingredientElement.mennyiseg * ingredientElement.hozzavalo.egysegAr} Ft</span>`;
 
-    inputImage.addEventListener('change', () => {
-        if (!inputImage.className.includes('border-error')){
-            image.src= inputImage.value;
-        }
-        else{
-            image.src = "/images/placeholder.png";
-        }
-    });
-    image.addEventListener('error', () => {
-         image.src = "/images/placeholder_error.png";
 
+            li.appendChild(firstRow);
+
+        
+            ingredientList.appendChild(li);   
     });
 }
 export function renderIngredients(ingredients: Ingredient[]){
@@ -244,6 +231,10 @@ export function renderIngredients(ingredients: Ingredient[]){
 
         }
     });
+
+
+
+
 // hozzáadás
     plusBtn.addEventListener('click', () => {
         let selectedoption = listIngredients.options[listIngredients.selectedIndex];
@@ -338,8 +329,10 @@ export function renderIngredients(ingredients: Ingredient[]){
             listIngredients.selectedIndex = 0;
         });
     });
-
+   
 }
+//
+
 // input step plusbtn
 export function handleClickEvent(){
     let inputStep = document.getElementById("input-step") as HTMLInputElement;
@@ -372,6 +365,68 @@ export function handleClickEvent(){
     });
     settime();  
     inputStep.value = "";
+}
+// Elkészítés lépéseinek megjelenítése
+function renderSteps(recipeToRender: Recipe){
+    let stepList = document.getElementById('steps-list')! as HTMLOListElement;
+    stepList.innerHTML = "";
+    recipeToRender.elkeszites.forEach(step =>{
+        let li = document.createElement('li');
+        li.className = "rounded py-2 align-items-center list-group-item  d-flex flex-nowrap step-item";
+        
+        let textDiv = document.createElement('div');
+        textDiv.className = "ms-2 my-auto overflow-x-auto";
+        textDiv.innerText = step;
+        li.appendChild(textDiv); 
+
+        stepList.appendChild(li);
+    });
+}
+//
+
+// img input
+export function handleImageInputs(){
+    let inputImage = document.getElementById("p-imageurl")! as HTMLInputElement;
+    let image = document.getElementById("modal-header-image")! as HTMLImageElement;
+    inputImage.addEventListener('input',() => {
+        let splitted = inputImage.value.split('.');
+        inputImage.classList.toggle("border-error",false);
+
+        if (inputImage.value != ""){
+            let fitExtension = false;
+
+            Object.values(fileExtensions).forEach(extension => {
+                if (extension == splitted[splitted.length -1]){
+                    fitExtension = true;
+                }
+            });
+
+            if (!fitExtension || !inputImage.value.includes('https')){
+                image.src = "/images/placeholder.png";
+                inputImage.classList.toggle("border-error",true);
+            }
+            else{
+                inputImage.classList.toggle("border-error",false);
+            }
+        }
+        else{
+            inputImage.classList.toggle("border-error",true);
+            image.src = "/images/placeholder.png";
+        }
+    });
+
+    inputImage.addEventListener('change', () => {
+        if (!inputImage.className.includes('border-error')){
+            image.src= inputImage.value;
+        }
+        else{
+            image.src = "/images/placeholder.png";
+        }
+    });
+    image.addEventListener('error', () => {
+         image.src = "/images/placeholder_error.png";
+
+    });
 }
 // loadOptions -> modal: kategória + típus
 export function loadOptions(recipes: Recipe[]){
@@ -420,25 +475,23 @@ function generateOptionsByEnums(selectList: HTMLSelectElement, firstOption: stri
     });
 
 }
+//
 
-export function plusbuttonsEventListener(){
-    const plusBtns = document.querySelectorAll('.plus-btn')!;
-    plusBtns.forEach(btn => {
-        btn.addEventListener('click', async () => {
-            settime();
-            await renderModalByRecipe(null); 
-        });
-              
+
+document.getElementById('edit-btn')!.addEventListener('click', () => {
+    // display -> edit, minden más megváltoztatni
+    document.querySelectorAll('.details-display').forEach(element =>{
+        element.classList.toggle('d-none',true);
     });
-    document.getElementById("save-recipe")!.removeEventListener('click', saveRecipe);
-    document.getElementById("save-recipe")!.addEventListener('click', saveRecipe);
+    document.querySelectorAll('.new-display').forEach(element =>{
+        element.classList.toggle('d-none',false);
+    });
+     document.querySelectorAll('.edit-display').forEach(element =>{
+        element.classList.toggle('d-none',false);
+    });
+});
 
-}
-
-export async function openDetailsWindow(selectedRecipe: Recipe){
-    await renderModalByRecipe(selectedRecipe);
-}
-
+// modal megjelenítése
 async function renderModalByRecipe(recipeToRender: Recipe | null){
 ///          
     let modalAlert = document.getElementById("modal-alert")!;
@@ -453,7 +506,7 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
     let selectType  = document.getElementById('select-type-x')! as HTMLSelectElement;
     let selectIngredients = document.getElementById('ingredients-list') as HTMLSelectElement;
     let inputStep = document.getElementById('input-step') as HTMLInputElement;
-
+    let sumprice = document.getElementById('sum-price') as HTMLInputElement;
 // reset 
     // új
     let clickedEdit = false;
@@ -469,9 +522,10 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
     inputHour.value =  hour;
     inputMinute.value = minute;
     inputImage.value = recipeToRender? recipeToRender.kepUrl: "";
-    inputStep.value                 = "";
-    selectType.selectedIndex        = 0;
-    selectCategory.selectedIndex    = 0;
+    inputStep.value = "";
+    sumprice.innerText = "0";
+    selectType.selectedIndex = 0;
+    selectCategory.selectedIndex = 0;
     selectIngredients.selectedIndex = 0;
     image.src = recipeToRender ? recipeToRender.kepUrl:"/images/placeholder.png";
 
@@ -486,7 +540,7 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
     inputStep.classList.toggle("border-error",false);
     selectCategory.classList.toggle("border-error",false);
     selectType.classList.toggle("border-error",false);
-
+    
     modalAlert.style.display = "none";
     modalAlertContent.innerText = "";
 
@@ -545,6 +599,7 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
         });
     stepBtn.removeEventListener('click',handleClickEvent);
     stepBtn.addEventListener('click', handleClickEvent); 
+
     // új
     if (recipeToRender != null){
         document.querySelectorAll('.new-display').forEach(element => {
@@ -553,11 +608,15 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
         document.querySelectorAll('.details-display').forEach(element => {
             element.classList.toggle('d-none',false);
         });
+        document.querySelectorAll('.edit-display').forEach(element => {
+              element.classList.toggle('d-none',true);
+        });
         
         document.getElementById('details-recipe-name')!.innerText = recipeToRender.nev;
         document.getElementById('edit-btn')!.addEventListener('click', () => {
             clickedEdit = true;
         });
+        ///
         let index = 0;
         let fitIndexCategory = 0;
         let fitIndexType = 0;
@@ -579,6 +638,20 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
         selectType.selectedIndex = fitIndexType + 1;
         document.getElementById('recipe-category-badge')!.innerText = recipeToRender.kategoria;
         document.getElementById('recipe-type-badge')!.innerText = recipeToRender.tipus;
+        ///
+        let stringTime = Number(hour) > 0 ? `${hour} óra ${minute} perc`:`${minute} perc`;
+        let sum = 0;
+        recipeToRender.hozzavalok.forEach(hozzavalo => {
+            sum += hozzavalo.mennyiseg * hozzavalo.hozzavalo.egysegAr;
+            
+        });
+        sumprice.innerText = sum.toString();
+        ///
+        document.getElementById('details-time')!.innerText = stringTime;
+        ///
+        renderIngredientsDetails(recipeToRender.hozzavalok);
+        ///
+        renderSteps(recipeToRender);
     }
     else{
         document.querySelectorAll('.new-display').forEach(element => {
@@ -587,7 +660,33 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
         document.querySelectorAll('.details-display').forEach(element => {
             element.classList.toggle('d-none',true);
         });
+        document.querySelectorAll('.edit-display').forEach(element => {
+            element.classList.toggle('d-none',true);
+        });
         document.getElementById('details-recipe-name')!.innerText = "";
     }
 //
 }
+
+// modal megnyitása: részletek
+export async function openDetailsWindow(selectedRecipe: Recipe){
+    await renderModalByRecipe(selectedRecipe);
+}
+// modal megnyitása: új
+export function plusbuttonsEventListener(){
+    const plusBtns = document.querySelectorAll('.plus-btn')!;
+    plusBtns.forEach(btn => {
+        btn.addEventListener('click', async () => {
+            settime();
+            await renderModalByRecipe(null); 
+        });
+              
+    });
+    document.getElementById("save-recipe")!.removeEventListener('click', saveRecipe);
+    document.getElementById("save-recipe")!.addEventListener('click', saveRecipe);
+
+}
+
+// edit-cancel-btn eventlistener ->minden más display megváltoztatása
+// mentés ->validáció ->> alert/menteni + display details visszaállítása
+// 
