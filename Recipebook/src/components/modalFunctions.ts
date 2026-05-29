@@ -4,6 +4,7 @@ import type { Ingredient } from "../models/ingredient";
 import type { Recipe } from "../models/recipe";
 import { settime } from "./other";
 
+let selectedIds:string[] = [];
 //mentés
 function checkFields(): boolean{
     let modalAlert = document.getElementById("modal-alert")!
@@ -184,30 +185,34 @@ function renderIngredientsDetails(ingredients: {hozzavalo: Ingredient,mennyiseg:
     ingredientList.classList.toggle('show',true);
     ingredientList.innerHTML = "";
     ingredients.forEach(ingredientElement => {
-            let li = document.createElement('li');
-            li.id = "list-ingredient-" + ingredientElement.hozzavalo.id;
-            li.className = "list-group-item d-flex flex-wrap ingredient-item pb-3 mt-1 ";
+            if (!selectedIds.includes(ingredientElement.hozzavalo.id)){
+                selectedIds.push(ingredientElement.hozzavalo.id);
+                let li = document.createElement('li');
+                li.id = "list-ingredient-" + ingredientElement.hozzavalo.id;
+                li.className = "list-group-item d-flex flex-wrap ingredient-item pb-3 mt-1 ";
+    
+                let firstRow = document.createElement('div');
+                firstRow.className = "my-auto d-flex my-auto flex-nowrap w-100 justify-content-between fw-bold mb-1";
+    
+                let p = document.createElement('p');
+                p.className = "mb-0 overflow-x-auto w-50 text-success my-auto";
+                p.innerText = ingredientElement.hozzavalo.nev;
+                firstRow.appendChild(p);
+                firstRow.innerHTML += `<span class="w-25 mx-2 my-auto  fw-bold">${ingredientElement.mennyiseg} ${ingredientElement.hozzavalo.mertekegyseg}</span>`;
+                firstRow.innerHTML += `<span for="" class="w-25 ms-auto mt-auto badge p-2  bg-secondary-subtle text-dark">teljes ár: ${ingredientElement.mennyiseg * ingredientElement.hozzavalo.egysegAr} Ft</span>`;
+    
+    
+                li.appendChild(firstRow);
+    
+            
+                ingredientList.appendChild(li);   
 
-            let firstRow = document.createElement('div');
-            firstRow.className = "my-auto d-flex my-auto flex-nowrap w-100 justify-content-between fw-bold mb-1";
-
-            let p = document.createElement('p');
-            p.className = "mb-0 overflow-x-auto w-50 text-success my-auto";
-            p.innerText = ingredientElement.hozzavalo.nev;
-            firstRow.appendChild(p);
-            firstRow.innerHTML += `<span class="w-25 mx-2 my-auto  fw-bold">${ingredientElement.mennyiseg} ${ingredientElement.hozzavalo.mertekegyseg}</span>`;
-            firstRow.innerHTML += `<span for="" class="w-25 ms-auto mt-auto badge p-2  bg-secondary-subtle text-dark">teljes ár: ${ingredientElement.mennyiseg * ingredientElement.hozzavalo.egysegAr} Ft</span>`;
-
-
-            li.appendChild(firstRow);
-
-        
-            ingredientList.appendChild(li);   
+            }
     });
 }
 export function renderIngredients(ingredients: Ingredient[]){
     let selectedIngredients = document.getElementById("selected-ingredients")! as HTMLUListElement;
-    let selectedIds:string[] = [];
+
     
     let sumPrice = 0;
 
@@ -229,6 +234,9 @@ export function renderIngredients(ingredients: Ingredient[]){
          if (selectedoption.value != "" && !selectedIds.includes(selectedoption.value.split("-")[2])){
             plusBtn.classList.toggle("disabled",false);
 
+        }
+        else{
+            plusBtn.classList.toggle("disabled",true);
         }
     });
 
@@ -507,6 +515,7 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
     let selectIngredients = document.getElementById('ingredients-list') as HTMLSelectElement;
     let inputStep = document.getElementById('input-step') as HTMLInputElement;
     let sumprice = document.getElementById('sum-price') as HTMLInputElement;
+    selectedIds = [];
 // reset 
     // új
     let clickedEdit = false;
