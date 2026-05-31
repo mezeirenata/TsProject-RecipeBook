@@ -25,7 +25,8 @@
 
 .ingredients-page .ingredients-table-scroll .table {
   margin-bottom: 0;
-  border-collapse: separate;
+  width: 100%;
+  border-collapse: collapse;
   border-spacing: 0;
 }
 
