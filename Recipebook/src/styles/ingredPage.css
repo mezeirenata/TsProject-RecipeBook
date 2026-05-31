@@ -9,3 +9,38 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.ingredients-page {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredients-page .ingredients-table-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
+
+.ingredients-page .ingredients-table-scroll .table {
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ingredients-page .ingredients-table-scroll table {
+  user-select: none;
+}
+
+.ingredients-page .ingredients-table-scroll input,
+.ingredients-page .ingredients-table-scroll select,
+.ingredients-page .ingredients-table-scroll textarea {
+  user-select: text;
+}
+
+.ingredients-page .ingredients-table-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
