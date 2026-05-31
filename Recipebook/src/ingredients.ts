@@ -7,6 +7,7 @@ const CLASSES = {
   cellAlign: 'align-middle text-center',
   cellAlignTop: 'align-top text-center',
   cellAlignMuted: 'align-middle text-center text-muted',
+  actions: 'align-middle text-center action-buttons',
   input: 'form-control',
   select: 'form-select',
   btnAdd: 'btn btn-outline-success',
@@ -32,7 +33,7 @@ function renderUnitOptions(selectedUnit = 'kg') {
 
 const addIngredientRow = `
 <tr class="table-light">
-  <th class="${CLASSES.cellAlignTop}">#</th>
+  <th class="${CLASSES.cellAlign}" scope="row">#</th>
   <td class="${CLASSES.cellAlignTop}">
     <div class="position-relative">
       <input id="newName" type="text" class="${CLASSES.input}" placeholder="Név">
@@ -67,7 +68,7 @@ async function renderIngredients(ingredients: Ingredient[]) {
     if (editingId === i.id) { // Szerkesztő mód
       structure += `
         <tr data-id="${i.id}">
-          <th class="${CLASSES.cellAlignTop} text-muted" scope="row">#${i.id}</th>
+          <th class="${CLASSES.cellAlign} text-muted" scope="row">#${i.id}</th>
           <td class="${CLASSES.cellAlignTop}">
             <div class="position-relative">
               <input id="editName-${i.id}" type="text" class="${CLASSES.input}" value="${i.nev}">
@@ -99,9 +100,11 @@ async function renderIngredients(ingredients: Ingredient[]) {
           <td class="${CLASSES.cellAlign} ${CLASSES.boldGreen}">${i.nev}</td>
           <td class="${CLASSES.cellAlign}">${i.mertekegyseg}</td>
           <td class="${CLASSES.cellAlign}">${i.egysegAr.toLocaleString('hu-HU', { style: 'currency', currency: 'HUF', minimumFractionDigits: 0, maximumFractionDigits: 2 })}</td>
-          <td class="${CLASSES.cellAlign}">
-            <button type="button" data-id="${i.id}" data-action="edit" class="${CLASSES.btnEdit}"><i class="${CLASSES.iconEdit} pointer-events-none"></i></button>
-            <button type="button" data-id="${i.id}" data-action="delete" class="${CLASSES.btnDelete}"><i class="${CLASSES.iconDelete} pointer-events-none"></i></button>
+          <td class="${CLASSES.actions}">
+            <div class="action-buttons-inner">
+              <button type="button" data-id="${i.id}" data-action="edit" class="${CLASSES.btnEdit} action-button"><i class="${CLASSES.iconEdit} pointer-events-none"></i></button>
+              <button type="button" data-id="${i.id}" data-action="delete" class="${CLASSES.btnDelete} action-button"><i class="${CLASSES.iconDelete} pointer-events-none"></i></button>
+            </div>
           </td>
         </tr>
       `;

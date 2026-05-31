@@ -45,3 +45,33 @@
   top: 0;
   z-index: 2;
 }
+
+@media (max-width: 991.98px) {
+	.ingredients-page .ingredients-table-scroll {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.ingredients-page .action-buttons-inner {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-wrap: nowrap;
+		gap: 0.35rem;
+		white-space: nowrap;
+	}
+
+	.ingredients-page .action-button {
+		padding: 0.5rem 0.6rem;
+		font-size: 0.875rem;
+		line-height: 1;
+	}
+}
+
+@media (min-width: 992px) {
+	.ingredients-page .add-ingredient-row {
+		max-width: 860px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
