@@ -31,38 +31,65 @@ function renderUnitOptions(selectedUnit = 'kg') {
     .join('');
 }
 
-const addIngredientRow = `
-<tr class="table-light">
-  <th class="${CLASSES.cellAlign}" scope="row">#</th>
-  <td class="${CLASSES.cellAlignTop}">
-    <div class="position-relative">
-      <input id="newName" type="text" class="${CLASSES.input}" placeholder="Név">
-      <div class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
-    </div>
-  </td>
-  <td class="${CLASSES.cellAlignTop}">
-    <select id="newUnit" class="${CLASSES.select}">
-      ${renderUnitOptions()}
-    </select>
-  </td>
-  <td class="${CLASSES.cellAlignTop}">
-    <div class="position-relative">
-      <input type="number" id="newPrice" class="${CLASSES.input}" placeholder="Ár">
-      <div class="invalid-feedback text-start">Kérlek töltsd ki az árat!</div>
-    </div>
-  </td>
-  <td class="${CLASSES.cellAlignTop}">
-    <button type="button" data-action="add" class="${CLASSES.btnAdd}"><i class="${CLASSES.iconAdd} pointer-events-none"></i></button>
-  </td>
-</tr>
-`;
+function renderAddIngredientRow() { //első a desktop, második a mobil 
+  return `
+    <tr class="table-light d-none d-md-table-row">
+      <th class="${CLASSES.cellAlign}" scope="row">#</th>
+      <td class="${CLASSES.cellAlignTop}">
+        <div class="position-relative">
+          <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
+          <div class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
+        </div>
+      </td>
+      <td class="${CLASSES.cellAlignTop}">
+        <select data-new-field="unit" class="${CLASSES.select}">
+          ${renderUnitOptions()}
+        </select>
+      </td>
+      <td class="${CLASSES.cellAlignTop}">
+        <div class="position-relative">
+          <input data-new-field="price" type="number" class="${CLASSES.input}" placeholder="Ár">
+          <div class="invalid-feedback text-start">Kérlek töltsd ki az árat!</div>
+        </div>
+      </td>
+      <td class="${CLASSES.cellAlignTop}">
+        <button type="button" data-action="add" class="${CLASSES.btnAdd}"><i class="${CLASSES.iconAdd} pointer-events-none"></i></button>
+      </td>
+    </tr>
+    
+    <tr class="table-light d-md-none">
+      <td colspan="5" class="${CLASSES.cellAlignTop} p-2">
+        <div class="d-flex flex-column gap-2">
+          <div class="position-relative">
+            <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
+            <div class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
+          </div>
+          <div class="row g-2">
+            <div class="col-6">
+              <select data-new-field="unit" class="${CLASSES.select}">
+                ${renderUnitOptions()}
+              </select>
+            </div>
+            <div class="col-6">
+              <div class="position-relative">
+                <input data-new-field="price" type="number" class="${CLASSES.input}" placeholder="Ár">
+                <div class="invalid-feedback text-start">Kérlek töltsd ki az árat!</div>
+              </div>
+            </div>
+          </div>
+          <button type="button" data-action="add" class="${CLASSES.btnAdd} w-100"><i class="${CLASSES.iconAdd} pointer-events-none"></i></button>
+        </div>
+      </td>
+    </tr>
+  `;
+}
 
 let editingId: string | null;
 
 async function renderIngredients(ingredients: Ingredient[]) {
   if (!tableBody) return;
 
-  let structure = addIngredientRow;
+  let structure = renderAddIngredientRow();
 
   ingredients.forEach(i => {
     if (editingId === i.id) { // Szerkesztő mód
@@ -125,10 +152,13 @@ function tableEvents() {
     const id = button.dataset.id;
 
     try {
-      if (action === 'add') {
-        const nameInput = document.getElementById('newName') as HTMLInputElement;
-        const unitSelect = document.getElementById('newUnit') as HTMLSelectElement;
-        const priceInput = document.getElementById('newPrice') as HTMLInputElement;
+      if (action === 'add') { //hozzáadás
+        const currentRow = button.closest('tr');
+        if (!currentRow) return;
+
+        const nameInput = currentRow.querySelector('[data-new-field="name"]') as HTMLInputElement;
+        const unitSelect = currentRow.querySelector('[data-new-field="unit"]') as HTMLSelectElement;
+        const priceInput = currentRow.querySelector('[data-new-field="price"]') as HTMLInputElement;
 
 
         let hasError = false;
@@ -158,17 +188,17 @@ function tableEvents() {
         refreshData();
       }
 
-      else if (action === 'edit' && id) {
+      else if (action === 'edit' && id) { // szerkesztés
         editingId = id;
         refreshData();
       }
 
-      else if (action === 'cancel') {
+      else if (action === 'cancel') { // szerkesztés megszakítása
         editingId = null;
         refreshData();
       }
 
-      else if (action === 'save' && id) {
+      else if (action === 'save' && id) { // szerkesztés mentése
         const editName = document.getElementById(`editName-${id}`) as HTMLInputElement;
         const editUnit = document.getElementById(`editUnit-${id}`) as HTMLSelectElement;
         const editPrice = document.getElementById(`editPrice-${id}`) as HTMLInputElement;
@@ -202,7 +232,7 @@ function tableEvents() {
         refreshData();
       }
 
-      else if (action === 'delete' && id) {
+      else if (action === 'delete' && id) { // törlés
         if (confirm('Biztosan törölni szeretnéd ezt az alapanyagot?')) {
           await deleteIngredient(id);
           refreshData();
@@ -229,3 +259,4 @@ initialize();
 
 // cursor adott helyeken?,
 // hozzáadáskor előre kerüljön
+// "próbáld meg azt hogy col-spannal összevonod az első sort amiben az inputok vannak, majd raksz rá egy row divet és elosztod collal inkább"
