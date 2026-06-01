@@ -76,10 +76,6 @@
               </div>
   </div>
 
-<!-- loading -->
-<div class="mt-5 mx-auto container w-50 text-center" id="loader-div">
-</div>
-
 <!-- recipes empty -->
   <div class="container mt-5 d-none" id="zero-found">
     <div class="row">
@@ -102,7 +98,7 @@
     <div class="card-header bg-secondary pt-3 pb-2">
     </div>
    <div class="card-body d-flex overflow-x-auto justify-content-between gap-3">
-  <div class="rounded-circle bg-success-subtle my-auto d-flex align-items-center justify-content-center flex-shrink-0" style="width:48px;height:48px;">
+  <div class="search-container-style rounded-circle bg-success-subtle my-auto d-flex align-items-center justify-content-center flex-shrink-0">
     <i class="bi bi-search text-success fs-4 "></i>
   </div>
 
@@ -119,14 +115,13 @@
   </div>
   </div>
 
-
 <!-- hozzáadás gomb -> modal -->
   <div class="modal fade  " id="recipe-modal" tabindex="-1" >
         <div class="modal-dialog ">
             <form id="recipe-form" class="modal-content">
                 <div class="modal-header   p-0 d-flex flex-wrap bg-dark">
                     <!-- images/placeholder.png -->
-                    <img id="modal-header-image" style="max-height: 350px;align-content: center;width: 100%;" class=" object-fit-cover rounded-top text-center bg-secondary-subtle text-muted fw-bold " src="images/placeholder.png"  alt="Recept indexképe" >
+                    <img id="modal-header-image" class=" object-fit-cover rounded-top text-center bg-secondary-subtle text-muted fw-bold " src="images/placeholder.png"  alt="Recept indexképe" >
                     <button id="btn-close-modal"  class="btn-close-modal btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" style="opacity: 0%;">
                     </button>
                       <button id="btn-close-modal-shown"  class="btn-close-modal details-display  btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" >
@@ -149,7 +144,7 @@
                     <p id="modal-alert-content" class="pb-0 mb-0">Hiba történt.</p>
                     <div  class="btn-close my-0" id="alert-btn-close" aria-label="Close"></div>
                   </div>
-                <div class="modal-body bg-light overflow-y-auto " style="height:400px;">
+                <div class="modal-body bg-light overflow-y-auto h-400">
               
 
                     <div class="row mb-4">
@@ -192,8 +187,8 @@
                     <div class="mt-4 new-display">
                       <label for="" class="fw-bold ms-1 mb-1">Kép feltöltése</label>
                         <div class="d-flex flex-nowrap">
-                            <div class="my-auto  px-3 py-2 bg-secondary-subtle" style="width:15%;border-bottom-left-radius:1vh ;border-top-left-radius: 1vh;"> URL</div>    
-                            <input type="search" id="p-imageurl"  placeholder="https://pelda.png" style="border-bottom-left-radius:0vh ;border-top-left-radius: 0vh;" class="form-control py-1" >
+                            <div class="my-auto  px-3 py-2 bg-secondary-subtle url-style"> URL</div>    
+                            <input type="search" id="p-imageurl"  placeholder="https://pelda.png" class="form-control py-1 image-input-style" >
                         </div>
                     </div>
 
@@ -206,19 +201,18 @@
                     <div class="mb-4">
                         <div class="d-flex">
                             <label for="select-ingredients" class="mb-1 fw-bold">Hozzávalók<span class="ms-1 text-danger new-display">*</span></label>
-                            <span class="text-end ms-auto badge bg-secondary me-1 fs-6 overflow-x-auto mb-1" for="" style="max-width: 100%;">összesen: <span id="sum-price" >0</span> Ft</span>
-                            
+                            <span class="text-end ms-auto badge bg-secondary me-1 fs-6 overflow-x-auto mb-1" style="max-width: 100%;">összesen: <span id="sum-price" >0</span> Ft</span>
                         </div>
                         <div class="navbar ">
                           <!-- új hozzávaló -->
                           <div class="w-75 d-flex flex-nowrap new-display">
-                            <select name="select-ingredients" class="form-select mb-2 py-2 w-75" style="border-top-right-radius: 0vh;border-bottom-right-radius: 0vh;" id="ingredients-list">
+                            <select name="select-ingredients" class="form-select mb-2 py-2 w-75 " id="ingredients-list">
                                 <option value="" selected>Válasszon hozzávalót!</option>
                                 <option value="" ></option>
                             </select>
-                            <div class="btn btn-outline-success mb-2 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-ingredient"><i class="bi bi-plus-lg"></i></div> 
+                            <div class="btn btn-outline-success mb-2 d-flex justify-content-center px-4" id="btn-add-ingredient"><i class="bi bi-plus-lg"></i></div> 
                           </div>
-                            <div class="navbar-toggler mb-auto py-1 new-display"  data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
+                            <div class="navbar-toggler mb-auto py-1 new-display" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
                             <span class="navbar-toggler-icon"></span>
                             </div>
                             <div class="collapse show navbar-collapse" id="navbarNavAltMarkup">
@@ -234,8 +228,8 @@
                         <label for="input-step" class="fw-bold">Elkészítés lépései<span class="ms-1 text-danger new-display">*</span></label>
                         <div class="navbar mt-1 ">
                             <div class="mb-1 d-flex new-display flex-nowrap" style="width: 75%;">
-                                <input type="search " placeholder="pl. Tegyél fel egy fazék vizet forrni." name="select-ingredients" class="form-control py-2  mb-1 w-75 me-0" id="input-step" style="border-top-right-radius: 0vh;border-bottom-right-radius: 0vh;">
-                                <div class="btn btn-outline-success mb-1 d-flex justify-content-center px-4 " style="width: 10%;border-top-left-radius: 0vh;border-bottom-left-radius: 0vh;" id="btn-add-step"><i class="bi bi-plus-lg "></i></div> 
+                                <input type="search " placeholder="pl. Tegyél fel egy fazék vizet forrni." name="select-ingredients" class="form-control py-2  mb-1 w-75 me-0" id="input-step" >
+                                <div class="btn btn-outline-success mb-1 d-flex justify-content-center px-4" id="btn-add-step"><i class="bi bi-plus-lg "></i></div> 
                             </div>
                             <div  class="new-display navbar-toggler mb-auto py-1" data-bs-toggle="collapse" data-bs-target="#steps" aria-controls="steps" aria-expanded="false" aria-label="Toggle navigation" style="cursor: pointer;">
                             <span class="navbar-toggler-icon"></span>
