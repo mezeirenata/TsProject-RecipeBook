@@ -1,4 +1,4 @@
-import { editRecipe, getAllIngredients, uploadRecipe } from "../api/http.service";
+import { editRecipe, getAllIngredients, getAllRecipes, uploadRecipe } from "../api/http.service";
 import { fileExtensions, RecipeCategory, RecipeType } from "../models/enum";
 import type { Ingredient } from "../models/ingredient";
 import type { Recipe } from "../models/recipe";
@@ -66,6 +66,19 @@ function checkFields(): boolean{
     }
 
 // számok megvizsgálása
+    try{
+        if (inputHour.value.includes('.')) throw new Error("hour");
+        if (inputMinute.value.includes('.')) throw new Error("minute");
+        hour = Number(inputHour.value);
+        minute = Number(inputMinute.value);
+        if (!Number.isInteger(hour)) throw new Error("hour");
+        if (!Number.isInteger(minute)) throw new Error("minute");
+    }
+    catch(e){
+        if ((e as Error).message == "hour") inputHour.classList.toggle('border-error',true);
+        if ((e as Error).message == "minute") inputMinute.classList.toggle('border-error',true);
+        numberCantBeConverted = true;
+    }
 
     if (Number(inputHour.value) < 0 ){
         inputHour.classList.toggle('border-error',true);
@@ -99,18 +112,6 @@ function checkFields(): boolean{
     catch{
         numberCantBeConverted = true;
     }
-
-    try{
-        hour = Number(inputHour.value);
-        minute = Number(inputMinute.value);
-        if (!Number.isInteger(hour)) throw new Error("hour");
-        if (!Number.isInteger(minute)) throw new Error("minute");
-    }
-    catch(e){
-        if (e == "hour") inputHour.classList.toggle('border-error',true);
-        else inputMinute.classList.toggle('border-error',true);
-        numberCantBeConverted = true;
-    }
 //
     if (emptyField){
         showAlert("Nem maradhat üresen kötelező mező!");
@@ -120,16 +121,17 @@ function checkFields(): boolean{
         showAlert("Legalább 1 elemnek szerepelnie kell a kötelező listákban!");
         return false;
     }
+    if (numberCantBeConverted){
+        showAlert("Helytelen a megadott számérték!");
+        return false;
+    }
     if (hourIsNull){
         showAlert("Nem lehet az elkészítés ideje 0 perc!");
         return false;
     }
+   
     if (numberError){
         showAlert("Nem adhat meg 0 vagy negatív értéket!")
-        return false;
-    }
-    if (numberCantBeConverted){
-        showAlert("Helytelen a megadott számérték!");
         return false;
     }
     if (minuteisBig){
@@ -402,6 +404,22 @@ function renderEditableSteps(Steps:string[]){
     });
     settime();  
 }
+function resetStepBtn(){
+let stepBtn = document.getElementById("btn-add-step") as HTMLButtonElement;
+    let inputStep = document.getElementById('input-step') as HTMLInputElement;
+    stepBtn.classList.toggle("disabled",true);
+    inputStep.addEventListener('input',() => {
+        inputStep.classList.toggle('border-error',false);
+            if (inputStep.value.trim() != ""){
+                stepBtn.classList.toggle("disabled",false);
+            }
+            else{
+                stepBtn.classList.toggle("disabled",true);
+            }
+        });
+    stepBtn.removeEventListener('click',stepaddBtn);
+    stepBtn.addEventListener('click', stepaddBtn); 
+}
 // ❖━━━━━━━━━━━━━━━━━━ Load options ━━━━━━━━━━━━━━━━━━❖
 export function loadOptions(recipes: Recipe[]){
     const selectCategory =  (document.getElementById("select-category") as HTMLSelectElement)!;
@@ -533,13 +551,14 @@ function clearInputs(){
     let selectIngredients = document.getElementById('ingredients-list') as HTMLSelectElement;
     let inputStep = document.getElementById('input-step') as HTMLInputElement;
     let sumprice = document.getElementById('sum-price') as HTMLInputElement;
+    let image = document.getElementById('modal-header-image') as HTMLImageElement;
     selectedIds = [];
-    
 // reset 
     recipeName.value = "";
     inputHour.value =  "";
     inputMinute.value = "";
     inputImage.value =  "";
+    image.src = "/images/placeholder.png";
     inputStep.value = "";
     sumprice.innerText = "0";
     selectType.selectedIndex = 0;
@@ -558,6 +577,10 @@ function clearInputs(){
     selectCategory.classList.toggle("border-error",false);
     selectType.classList.toggle("border-error",false);
    
+    generateOptionsByEnums(selectCategory,"kategória",RecipeCategory);
+    generateOptionsByEnums(selectType,"mód",RecipeType); 
+
+    
 }
 function showAlert(message: string, bgcolor: string = "danger", removeColor: string = "success") {
     document.getElementById("modal-alert")!.classList.toggle(`alert-${bgcolor}`,true);
@@ -597,20 +620,19 @@ export function handleImageInputs(){
             }
 
             if (!fitExtension || !inputImage.value.includes('https')){
-                image.src = "/images/placeholder.png";
+                image.src = "/images/placeholder_error.png";
                 inputImage.classList.toggle("border-error",true);
             }
             else inputImage.classList.toggle("border-error",false);  
         }
         else{
-            inputImage.classList.toggle("border-error",true);
             image.src = "/images/placeholder.png";
         }
     });
 
     inputImage.addEventListener('change', () => {
         if (!inputImage.className.includes('border-error')) image.src= inputImage.value;
-        else image.src = "/images/placeholder.png";
+        else image.src = "/images/placeholder_error.png";
     });
 
     image.addEventListener('error', () => {
@@ -620,9 +642,11 @@ export function handleImageInputs(){
 // ❖━━━━━━━━━━━━━━━━━━ Modal ━━━━━━━━━━━━━━━━━━❖
 document.getElementById('btn-close-modal-shown')!.addEventListener('click', () => {
     openedRecipe = null;
+    plusbuttonsEventListener();
 });
 document.getElementById('recipe-modal')!.addEventListener('hidden.bs.modal', () => {
     openedRecipe = null;
+    plusbuttonsEventListener();
 });
 
 // modal megjelenítése
@@ -641,7 +665,7 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
     clearInputs();
     
     if (modificationSaved){
-        showAlert("Sikerült a mentés","success","danger");
+        showAlert("Sikeres módosítás!","success","danger");
     }
     else{
         hideAlert();
@@ -738,13 +762,20 @@ async function editBtnEvent(){
     await editView();
 }
 // új
-export function plusbuttonsEventListener(){
+export async function plusbuttonsEventListener(){
     openedRecipe = null;
+    hideAlert();
+    newView();
+    clearInputs();
+    renderIngredients(await getAllIngredients(),null);
+    resetStepBtn();
+    handleImageInputs();
     const plusBtns = document.querySelectorAll('.plus-btn')!;
     plusBtns.forEach(btn => {
         btn.addEventListener('click', async () => {
             settime();
-            await renderModalByRecipe(null); 
+            openedRecipe = null;
+            await renderModalByRecipe(openedRecipe); 
         });
     });
     document.getElementById("save-recipe")!.removeEventListener('click', saveRecipe);

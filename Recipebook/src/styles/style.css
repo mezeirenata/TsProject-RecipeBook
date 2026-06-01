@@ -121,7 +121,8 @@ body{
 @media(max-width:1400px){
   @media(min-width:1200px){
     .card-recipe{
-      height:500px!important;
+      min-height:500px!important;
+      max-height: 500px!important;
     }
   }
 }

@@ -24,6 +24,7 @@ function showClearBtn(){
     }
     (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none", show);
 }
+
 // ❖━━━━━━━━━━━━━━━━━━ Listázás ━━━━━━━━━━━━━━━━━━❖
 function renderRecipes(recipes: Recipe[]){
     const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
@@ -37,7 +38,7 @@ function renderRecipes(recipes: Recipe[]){
         cardDiv.style.width = "18rem";
         
         cardDiv.innerHTML = `
-        <img src="${recipe.kepUrl}" class="card-img-top object-fit-cover" style="height:280px;" alt="Sikertelen képbetöltés">
+        <img src="${recipe.kepUrl}" class="card-img-top object-fit-cover" style="min-height:280px;max-height:280px;" alt="Sikertelen képbetöltés">
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title"><span class="fw-bold me-2" id="card-nev-${recipe.id}"></span></h5>
