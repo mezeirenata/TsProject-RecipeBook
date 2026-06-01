@@ -77,7 +77,7 @@ export async function deleteIngredient(id: string){
 }
 
 //------------------------------POST/CREATE------------------------------
-export async function uploadRecipe(nev:string,elkeszitesiIdoPerc:Number, elkeszites:string[],tipus:string,kategoria:string,kepUrl:string,hozzavalok:{hozzavalo: Ingredient,quantity:Number}[]): Promise<Recipe> 
+export async function uploadRecipe(nev:string,elkeszitesiIdoPerc:Number, elkeszites:string[],tipus:string,kategoria:string,kepUrl:string,hozzavalok:{hozzavalo: Ingredient,mennyiseg:number}[]): Promise<Recipe> 
 {
     let url = BASE_URL + "/receptek";
     const response = await fetch(url, {
@@ -86,7 +86,7 @@ export async function uploadRecipe(nev:string,elkeszitesiIdoPerc:Number, elkeszi
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({nev:nev,elkeszitesiIdoPerc:elkeszitesiIdoPerc,elkeszites:elkeszites,tipus:tipus,kategoria:kategoria,kepUrl:kepUrl,hozzavalok:hozzavalok}),
+        body: JSON.stringify({id:"1",nev:nev,elkeszitesiIdoPerc:elkeszitesiIdoPerc,elkeszites:elkeszites,tipus:tipus,kategoria:kategoria,kepUrl:kepUrl,hozzavalok:hozzavalok}),
     });
     if (!response.ok) throw new Error("Hiba feltöltéskor");
 
