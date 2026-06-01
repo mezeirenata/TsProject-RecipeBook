@@ -3,30 +3,30 @@
     {
       "id": "1",
       "nev": "Paradicsomos tészta",
-      "elkeszitesiIdoPerc": 51,
+      "elkeszitesiIdoPerc": 25,
       "elkeszites": [
         "Főzd meg a tésztát 8-10 perc alatt.",
         "Készíts paradicsomos szószt.",
         "Keverd össze a tésztát a szósszal."
       ],
-      "tipus": "Hűtés",
+      "tipus": "Főzés",
       "kategoria": "Főétel",
       "kepUrl": "https://kep.cdn.indexvas.hu/1/0/2908/29088/290887/29088759_520faee71c28c28eb8f97c89398f62ac_wm.jpg",
       "hozzavalok": [
         {
           "hozzavalo": {
-            "id": "2",
-            "nev": "Uborka",
-            "egysegAr": 400,
+            "id": "1",
+            "nev": "Paradicsom",
+            "egysegAr": 799,
             "mertekegyseg": "db"
           },
-          "mennyiseg": 11
+          "mennyiseg": 1
         }
       ]
     },
     {
       "id": "2",
-      "nev": "Paradicsomos leves",
+      "nev": "Paradicsomos levesa",
       "elkeszitesiIdoPerc": 75,
       "elkeszites": [
         "Forralj vizet egy nagy lábasban.",

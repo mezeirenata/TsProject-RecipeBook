@@ -167,6 +167,7 @@ export async function saveRecipe():Promise<boolean>{
         }
         else{
             let tobeModified = openedRecipe;
+            let og = JSON.stringify(openedRecipe);
             tobeModified.nev = recipeName;
             tobeModified.elkeszitesiIdoPerc = minutes;
             tobeModified.kategoria = category;
@@ -175,7 +176,9 @@ export async function saveRecipe():Promise<boolean>{
             tobeModified.elkeszites = stepsList;
             tobeModified.hozzavalok = ingredientsList;
             await editRecipe(tobeModified);
-            modificationSaved = true;
+            if (JSON.stringify(tobeModified) != og){
+                modificationSaved = true;
+            }
             openedRecipe = tobeModified;
             detailView();
             renderModalByRecipe(openedRecipe);
@@ -616,6 +619,9 @@ export function handleImageInputs(){
 }
 // ❖━━━━━━━━━━━━━━━━━━ Modal ━━━━━━━━━━━━━━━━━━❖
 document.getElementById('btn-close-modal-shown')!.addEventListener('click', () => {
+    openedRecipe = null;
+});
+document.getElementById('recipe-modal')!.addEventListener('hidden.bs.modal', () => {
     openedRecipe = null;
 });
 
