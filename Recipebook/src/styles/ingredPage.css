@@ -1,18 +1,7 @@
-#addIngredientCard {
-  width: 95%;
-  margin: 10px auto;
-  background-color: antiquewhite;
-}
-
-#ingredientCardBody {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .ingredients-page {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -36,9 +25,7 @@
   user-select: none;
 }
 
-.ingredients-page .ingredients-table-scroll input,
-.ingredients-page .ingredients-table-scroll select,
-.ingredients-page .ingredients-table-scroll textarea {
+.ingredients-page .ingredients-table-scroll :is(input, select, textarea) {
   user-select: text;
 }
 
@@ -70,10 +57,80 @@
   }
 }
 
+@media (max-width: 575.98px) {
+  .ingredients-page .ingredients-table-scroll {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .ingredients-page .ingredients-table-scroll .table {
+    clip-path: none;
+    -webkit-clip-path: none;
+    border-radius: 0.5rem;
+  }
+
+  .ingredients-page .ingredients-table-scroll :is(th, td) {
+    padding: 0.6rem 0.45rem;
+    font-size: 0.85rem;
+  }
+
+  .ingredients-page .action-button {
+    width: 100%;
+  }
+
+  .ingredients-page .action-buttons {
+    min-width: 7rem;
+  }
+
+  .ingredients-page .ingredients-table-scroll thead {
+    display: none;
+  }
+
+  .ingredients-page .d-md-none td {
+    padding: 0.35rem 0.25rem;
+  }
+
+  .ingredients-page .d-md-none .form-control,
+  .ingredients-page .d-md-none .form-select {
+    font-size: 0.92rem;
+    padding: 0.35rem 0.5rem;
+    height: calc(1.6em + 0.7rem);
+  }
+
+  .ingredients-page .action-buttons-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .ingredients-page .action-button {
+    padding: 0.45rem 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
 @media (min-width: 992px) {
   .ingredients-page .add-ingredient-row {
     max-width: 860px;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+@media(max-width:768px){
+  #navbar {
+    height: 240px;
+  }
+
+  #navbar.scrolled {
+    height: 180px;
+  }
+
+  #title {
+    font-size: 28px;
+  }
+
+  #title.scrolled {
+    font-size: 22px;
   }
 }
