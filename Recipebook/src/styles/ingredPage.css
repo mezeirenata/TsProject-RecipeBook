@@ -133,4 +133,7 @@
   #title.scrolled {
     font-size: 22px;
   }
+  thead{
+    display: none;
+  }
 }
