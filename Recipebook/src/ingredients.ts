@@ -91,7 +91,7 @@ async function renderIngredients(ingredients: Ingredient[]) {
 
   let structure = renderAddIngredientRow();
 
-  ingredients.forEach(i => {
+  ingredients.reverse().forEach(i => {
     if (editingId === i.id) { // Szerkesztő mód
       structure += `
         <tr data-id="${i.id}">
@@ -192,8 +192,7 @@ function tableEvents() {
         });
 
         const data = await getAllIngredients();
-        const reordered = [newIngredient, ...data.filter(i => i.id !== newIngredient.id)];
-        renderIngredients(reordered);
+        renderIngredients(data);
       }
 
       else if (action === 'edit' && id) { //szerkesztes
