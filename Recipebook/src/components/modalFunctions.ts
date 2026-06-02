@@ -1,4 +1,4 @@
-import { editRecipe, getAllIngredients, getAllRecipes, uploadRecipe } from "../api/http.service";
+import { editRecipe, getAllIngredients, uploadRecipe } from "../api/http.service";
 import { fileExtensions, RecipeCategory, RecipeType } from "../models/enum";
 import type { Ingredient } from "../models/ingredient";
 import type { Recipe } from "../models/recipe";
@@ -8,7 +8,12 @@ let selectedIds:string[] = [];
 let openedRecipe: Recipe | null = null;
 let ingredients: Ingredient[] = [];
 let modificationSaved = false;
-ingredients = await getAllIngredients();
+try{
+    ingredients = await getAllIngredients();
+}
+catch{
+    console.error("Hozzávalók betöltése nem sikerült.");
+}
 
 
 // ❖━━━━━━━━━━━━━━━━━━ Mentés ━━━━━━━━━━━━━━━━━━❖
@@ -187,7 +192,7 @@ export async function saveRecipe():Promise<boolean>{
         }
     }
     catch(e){
-        showAlert("Nem sikerült menteni a receptet!");
+        showAlert("Nem sikerült menteni a receptet!","danger","success");
         return false;     
     }
     return true;
@@ -651,8 +656,6 @@ document.getElementById('recipe-modal')!.addEventListener('hidden.bs.modal', () 
 
 // modal megjelenítése
 async function renderModalByRecipe(recipeToRender: Recipe | null){     
-    let modalAlert = document.getElementById("modal-alert")!;
-    let modalAlertContent = document.getElementById("modal-alert-content")!;
     let alertClose = document.getElementById('alert-btn-close')! as HTMLButtonElement;
     let inputHour = document.getElementById("p-hour")! as HTMLInputElement;
     let inputMinute = document.getElementById("p-minute")! as HTMLInputElement;
@@ -700,13 +703,11 @@ async function renderModalByRecipe(recipeToRender: Recipe | null){
 /// ingredients
     try{
         let ingredients = await getAllIngredients();
-
         renderIngredients(ingredients, recipeToRender? recipeToRender.hozzavalok:null);
     }
     catch(e){
         console.error(e);
-        modalAlert.style.display = "block";
-        modalAlertContent.innerText = e!.toString();
+        showAlert((e as Error).message, "danger","success");
     }
 /// steps
     let stepBtn = document.getElementById("btn-add-step") as HTMLButtonElement;
@@ -767,7 +768,12 @@ export async function plusbuttonsEventListener(){
     hideAlert();
     newView();
     clearInputs();
-    renderIngredients(await getAllIngredients(),null);
+    try{
+        renderIngredients(await getAllIngredients(),null);
+    }
+    catch(e){
+        showAlert((e as Error).message,"danger","success");
+    }
     resetStepBtn();
     handleImageInputs();
     const plusBtns = document.querySelectorAll('.plus-btn')!;
@@ -827,9 +833,7 @@ function newView(){
     });
 }
 
-// todo: módosítás mentése -> alert
 // alert törlésnél
 // alert hozzáadásnál
 // api hibák
-// index szépítés
 // ingredients: keresés + reszponzivitás + üres

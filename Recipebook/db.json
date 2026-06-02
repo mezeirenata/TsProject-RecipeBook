@@ -9,7 +9,7 @@
         "Készíts paradicsomos szószt.",
         "Keverd össze a tésztát a szósszal."
       ],
-      "tipus": "Főzés",
+      "tipus": "Hűtés",
       "kategoria": "Főétel",
       "kepUrl": "https://kep.cdn.indexvas.hu/1/0/2908/29088/290887/29088759_520faee71c28c28eb8f97c89398f62ac_wm.jpg",
       "hozzavalok": [
@@ -45,7 +45,7 @@
             "egysegAr": 799,
             "mertekegyseg": "db"
           },
-          "mennyiseg": 2
+          "mennyiseg": 3
         }
       ]
     }
