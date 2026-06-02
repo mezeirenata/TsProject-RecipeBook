@@ -6,6 +6,94 @@
   flex-direction: column;
 }
 
+/* ---------- GLOBAL ---------- */
+
+.ingredients-page {
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: default;
+
+  background-color: #fff5f5;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 120, 120, 0.10) 0px,
+      rgba(255, 120, 120, 0.10) 10px,
+      transparent 2px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 120, 120, 0.10) 0px,
+      rgba(255, 120, 120, 0.10) 10px,
+      transparent 2px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 180, 180, 0.06) 0px,
+      rgba(255, 180, 180, 0.06) 1px,
+      transparent 1px,
+      transparent 12px
+    );
+}
+
+.ingredients-page #navbar {
+  background-image: url('/images/background.png');
+  background-size: cover;
+  background-position-y: center;
+  background-repeat: no-repeat;
+  height: 400px;
+  position: relative;
+}
+
+.ingredients-page #navbar.scrolled {
+  height: 30vh;
+}
+
+.ingredients-page #title {
+  font-size: 35px;
+  transition: 0.35s ease;
+}
+
+.ingredients-page #title.scrolled {
+  font-size: 25px;
+}
+
+.ingredients-page .bg-brown {
+  background-color: rgb(27, 23, 23) !important;
+}
+
+.ingredients-page .border-end-radius {
+  border-top-right-radius: 1vh;
+  border-bottom-right-radius: 1vh;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.ingredients-page .border-start-radius {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 1vh;
+  border-top-left-radius: 1vh;
+}
+
+.ingredients-page .form-select {
+  cursor: pointer;
+}
+
+/* ---------- NAVBAR ---------- */
+
+.ingredients-page #functionable-navbar {
+  position: relative;
+  width: 100%;
+  background-color: #dc3546c2;
+  backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+/* ---------- HOZZAVALOK TABLE ---------- */
+
 .ingredients-page .ingredients-table-scroll {
   flex: 1 1 auto;
   min-height: 0;
@@ -35,6 +123,8 @@
   z-index: 2;
 }
 
+/* ---------- kb. tablet meretu reszponzivitas ---------- */
+
 @media (max-width: 991.98px) {
   .ingredients-page .ingredients-table-scroll {
     padding-left: 0;
@@ -54,6 +144,26 @@
     padding: 0.5rem 0.6rem;
     font-size: 0.875rem;
     line-height: 1;
+  }
+}
+
+/* ---------- kb. telefon meretu reszponzivitas ---------- */
+
+@media (max-width: 768px) {
+  .ingredients-page #navbar {
+    height: 240px;
+  }
+
+  .ingredients-page #title {
+    font-size: 28px;
+  }
+
+  .ingredients-page #title.scrolled {
+    font-size: 22px;
+  }
+
+  .ingredients-page thead {
+    display: none;
   }
 }
 
@@ -80,10 +190,6 @@
 
   .ingredients-page .action-buttons {
     min-width: 7rem;
-  }
-
-  .ingredients-page .ingredients-table-scroll thead {
-    display: none;
   }
 
   .ingredients-page .d-md-none td {
@@ -114,26 +220,5 @@
     max-width: 860px;
     margin-left: auto;
     margin-right: auto;
-  }
-}
-
-@media(max-width:768px){
-  #navbar {
-    height: 240px;
-  }
-
-  #navbar.scrolled {
-    height: 180px;
-  }
-
-  #title {
-    font-size: 28px;
-  }
-
-  #title.scrolled {
-    font-size: 22px;
-  }
-  thead{
-    display: none;
   }
 }

@@ -1,5 +1,6 @@
 import type { Ingredient } from './models/ingredient';
-import { getAllIngredients, deleteIngredient, uploadIngredient, editIngredient } from './api/http.service';
+import { getAllIngredients, deleteIngredient, uploadIngredient, editIngredient, searchIngredientById, searchIngredientsByFetch } from './api/http.service';
+import { initSearch } from './components/ingredientsSearch';
 
 const tableBody = document.getElementById('ingredientsTable') as HTMLTableSectionElement;
 
@@ -38,7 +39,7 @@ function renderAddIngredientRow() { //első a desktop, második a mobil
       <td class="${CLASSES.cellAlignTop}">
         <div class="position-relative">
           <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
-          <div class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
+          <div data-new-field="name-error" class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
         </div>
       </td>
       <td class="${CLASSES.cellAlignTop}">
@@ -62,7 +63,7 @@ function renderAddIngredientRow() { //első a desktop, második a mobil
         <div class="d-flex flex-column gap-2">
           <div class="position-relative">
             <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
-            <div class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
+            <div data-new-field="name-error" class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
           </div>
           <div class="row g-2">
             <div class="col-6">
@@ -157,6 +158,7 @@ function tableEvents() {
         if (!currentRow) return;
 
         const nameInput = currentRow.querySelector('[data-new-field="name"]') as HTMLInputElement;
+        const nameError = currentRow.querySelector('[data-new-field="name-error"]') as HTMLElement;
         const unitSelect = currentRow.querySelector('[data-new-field="unit"]') as HTMLSelectElement;
         const priceInput = currentRow.querySelector('[data-new-field="price"]') as HTMLInputElement;
         const priceError = currentRow.querySelector('[data-new-field="price-error"]') as HTMLElement;
@@ -165,6 +167,7 @@ function tableEvents() {
 
         if (!nameInput.value.trim()) {
           nameInput.classList.add('is-invalid');
+          nameError.textContent = 'Kérem adjon nevet a hozzávalónak!';
           hasError = true;
         } else {
           nameInput.classList.remove('is-invalid');
@@ -181,6 +184,22 @@ function tableEvents() {
         } else {
           priceInput.classList.remove('is-invalid');
         }
+
+        const results = await searchIngredientsByFetch( nameInput.value.trim());
+        if (results.length > 0) {
+          nameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
+          nameInput.classList.add('is-invalid');
+          hasError = true;
+        }  
+
+        // let ingredients = await getAllIngredients();
+        // ingredients.forEach(ingredient => {
+        //   if (ingredient.nev.toLowerCase() === nameInput.value.trim().toLowerCase()) {
+        //     nameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
+        //     nameInput.classList.add('is-invalid');
+        //     hasError = true;
+        //   }
+        // });
 
         if (hasError) return;
 
@@ -259,13 +278,12 @@ function tableEvents() {
 }
 
 async function refreshData() {
-  const data = await getAllIngredients();
-  renderIngredients(data);
+  initSearch(renderIngredients);
 }
 
 async function initialize() {
   tableEvents();
-  await refreshData();
+  initSearch(renderIngredients);
 }
 
 initialize();
