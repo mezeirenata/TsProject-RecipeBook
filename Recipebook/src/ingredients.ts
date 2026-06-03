@@ -39,7 +39,7 @@ function renderAddIngredientRow() { //első a desktop, második a mobil
       <td class="${CLASSES.cellAlignTop}">
         <div class="position-relative">
           <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
-          <div data-new-field="name-error" class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
+          <div data-new-field="name-error" class="invalid-feedback text-start">Kérem adja meg a nevet!</div>
         </div>
       </td>
       <td class="${CLASSES.cellAlignTop}">
@@ -50,7 +50,7 @@ function renderAddIngredientRow() { //első a desktop, második a mobil
       <td class="${CLASSES.cellAlignTop}">
         <div class="position-relative">
           <input data-new-field="price" type="number" min="0" class="${CLASSES.input}" placeholder="Ár">
-          <div data-new-field="price-error" class="invalid-feedback text-start">Kérlek töltsd ki az árat!</div>
+          <div data-new-field="price-error" class="invalid-feedback text-start">Kérem adja meg az árat!</div>
         </div>
       </td>
       <td class="${CLASSES.cellAlignTop}">
@@ -63,7 +63,7 @@ function renderAddIngredientRow() { //első a desktop, második a mobil
         <div class="d-flex flex-column gap-2">
           <div class="position-relative">
             <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
-            <div data-new-field="name-error" class="invalid-feedback text-start">Kérlek töltsd ki a nevet!</div>
+            <div data-new-field="name-error" class="invalid-feedback text-start">Kérem adja meg a nevet!</div>
           </div>
           <div class="row g-2">
             <div class="col-6">
@@ -74,7 +74,7 @@ function renderAddIngredientRow() { //első a desktop, második a mobil
             <div class="col-6">
               <div class="position-relative">
                 <input data-new-field="price" type="number" min="0" class="${CLASSES.input}" placeholder="Ár">
-                <div data-new-field="price-error" class="invalid-feedback text-start">Kérlek töltsd ki az árat!</div>
+                <div data-new-field="price-error" class="invalid-feedback text-start">Kérem adja meg az árat!</div>
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ async function renderIngredients(ingredients: Ingredient[]) {
           <td class="${CLASSES.cellAlignTop}">
             <div class="position-relative">
               <input id="editName-${i.id}" type="text" class="${CLASSES.input}" value="${i.nev}">
-              <div class="invalid-feedback text-start">Kérem adjon nevet a hozzávalónak!</div>
+              <div id="editName-error-${i.id}" class="invalid-feedback text-start">Kérem adjon nevet a hozzávalónak!</div>
             </div>
           </td>
           <td class="${CLASSES.cellAlignTop}">
@@ -174,7 +174,7 @@ function tableEvents() {
         }
 
         if (!priceInput.value.trim()) {
-          priceError.textContent = 'Kérlek töltsd ki az árat!';
+          priceError.textContent = 'Kérem adja meg az árat!';
           priceInput.classList.add('is-invalid');
           hasError = true;
         } else if (parseFloat(priceInput.value) <= 0) {
@@ -185,21 +185,21 @@ function tableEvents() {
           priceInput.classList.remove('is-invalid');
         }
 
-        const results = await searchIngredientsByFetch( nameInput.value.trim());
-        if (results.length > 0) {
-          nameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
-          nameInput.classList.add('is-invalid');
-          hasError = true;
-        }  
+        // const results = await searchIngredientsByFetch( nameInput.value.trim());
+        // if (results.length > 0) {
+        //   nameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
+        //   nameInput.classList.add('is-invalid');
+        //   hasError = true;
+        // }  
 
-        // let ingredients = await getAllIngredients();
-        // ingredients.forEach(ingredient => {
-        //   if (ingredient.nev.toLowerCase() === nameInput.value.trim().toLowerCase()) {
-        //     nameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
-        //     nameInput.classList.add('is-invalid');
-        //     hasError = true;
-        //   }
-        // });
+        let ingredients = await getAllIngredients();
+        ingredients.forEach(ingredient => {
+          if (ingredient.nev.toLowerCase() === nameInput.value.trim().toLowerCase()) {
+            nameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
+            nameInput.classList.add('is-invalid');
+            hasError = true;
+          }
+        });
 
         if (hasError) return;
 
@@ -226,6 +226,7 @@ function tableEvents() {
 
       else if (action === 'save' && id) { //szerkesztes mentes
         const editName = document.getElementById(`editName-${id}`) as HTMLInputElement;
+        const editNameError = document.getElementById(`editName-error-${id}`) as HTMLElement;
         const editUnit = document.getElementById(`editUnit-${id}`) as HTMLSelectElement;
         const editPrice = document.getElementById(`editPrice-${id}`) as HTMLInputElement;
         const editPriceError = document.getElementById(`editPrice-error-${id}`) as HTMLElement;
@@ -233,11 +234,21 @@ function tableEvents() {
         let hasError = false;
 
         if (!editName.value.trim()) {
+          editNameError.textContent = 'Kérem adjon nevet a hozzávalónak!';
           editName.classList.add('is-invalid');
           hasError = true;
         } else {
           editName.classList.remove('is-invalid');
         }
+
+        let allIngredients = await getAllIngredients();
+        allIngredients.forEach(ingredient => {
+          if (ingredient.nev.toLowerCase() === editName.value.trim().toLowerCase() && ingredient.id !== id) {
+            editNameError.textContent = 'Már létezik ilyen nevű hozzávaló!';
+            editName.classList.add('is-invalid');
+            hasError = true;
+          }
+        });
 
         if (!editPrice.value.trim()) {
           editPriceError.textContent = 'Kérem adjon meg árat a hozzávalónak!';
@@ -265,7 +276,7 @@ function tableEvents() {
       }
 
       else if (action === 'delete' && id) { //torles
-        if (confirm('Biztosan törölni szeretnéd ezt az alapanyagot?')) {
+        if (confirm('Biztosan törölni szeretné ezt az alapanyagot?')) {
           await deleteIngredient(id);
           refreshData();
         }
