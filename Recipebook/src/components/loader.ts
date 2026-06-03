@@ -1,6 +1,7 @@
-import './styles/features.css';
+import '../styles/features.css';
 
-export function loadingStatus(div: HTMLDivElement, duration: number = 3000) {
+export function loadingStatus(div: HTMLDivElement, duration: number) {
+    div.style.display = "block";
     div.innerHTML =
     `<div class="loader" id="loader"></div>`;
     setTimeout(() => {
