@@ -55,19 +55,23 @@
       </form>
     </div>
   </div> -->
-<div class="container-fluid  mb-3 shadow py-2 " id="functionable-navbar" >
+  <div class="container-fluid  mb-3 shadow py-2 " id="functionable-navbar">
     <div class="container">
       <nav class="navbar navbar-expand-lg ">
         <div class="container-fluid">
-        <form class="d-flex mx-1 my-2" role="search" onsubmit="event.preventDefault()">
-          <input class="form-control py-2 border-start-radius" id="search-input" type="search" placeholder="Keresés.." aria-label="Search"/>
-          <button class="btn border-tertiary border-1 text-muted bg-body-tertiary border-end-radius px-3" id="btn-search"  type="button"><i class="bi bi-search"></i></button>
-          <div class="nav-item dropdown mx-1 me-2">
-              <button class="btn rounded d-none py-2 btn-outline-danger px-4 bg-danger-subtle btn-sm d-flex flex-nowrap" id="btn-clear">
-               <i class="bi bi-x me-1 my-auto  "></i><span class="fs-6 me-1">Mezők</span><span class="fs-6"> törlése</span>
-             </button>
-         </div>
-        </form>
+          <form class="d-flex mx-1 my-2" role="search" onsubmit="event.preventDefault()">
+            <input class="form-control py-2 border-start-radius" id="search-input" type="search" placeholder="Keresés.."
+              aria-label="Search" />
+            <button class="btn border-tertiary border-1 text-muted bg-body-tertiary border-end-radius px-3"
+              id="btn-search" type="button"><i class="bi bi-search"></i></button>
+            <div class="nav-item dropdown mx-1 me-2">
+              <button class="btn rounded d-none py-2 btn-outline-danger px-4 bg-danger-subtle btn-sm d-flex flex-nowrap"
+                id="btn-clear">
+                <i class="bi bi-x me-1 my-auto  "></i><span class="fs-6 me-1">Mezők</span><span class="fs-6">
+                  törlése</span>
+              </button>
+            </div>
+          </form>
       </nav>
     </div>
   </div>
@@ -95,10 +99,11 @@
       </div>
     </div>
   </div>
- <div class="container w-50 mx-auto alert-danger alert text-center d-none mt-4 fw-bold" id="api-error"></div>
-  <div id="tableContainer" style="max-height: 550px;" class="overflow-y-auto container-lg mb-4 mt-0 p-0 mt-lg-5 ingredients-table-scroll">
+  <div class="container w-50 mx-auto alert-danger alert text-center d-none mt-4 fw-bold" id="api-error"></div>
+  <div id="tableContainer" style="max-height: 550px;"
+    class="overflow-y-auto container-lg mb-4 mt-0 p-0 mt-lg-5 ingredients-table-scroll">
     <table id="ingredientsTableEl" class="table table-hover w-100 mb-0 rounded-3 border border-secondary-subtle">
-      <thead class="table-dark" style="position: sticky;">
+      <thead class="table-dark" style="position: sticky; z-index: 1;">
         <tr>
           <th scope="col" class="text-center">Id</th>
           <th scope="col" class="text-center">Hozzávaló neve</th>
