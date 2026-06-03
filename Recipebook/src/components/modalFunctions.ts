@@ -618,8 +618,8 @@ export function handleImageInputs(){
             try{
                 let url = new URL(inputImage.value);
                 Object.values(fileExtensions).forEach(extension => {
-                    if (extension == url.pathname) fitExtension = true;
-                });
+                    if (url.pathname.includes(extension)) fitExtension = true;
+                }); 
             }
             catch{
                 fitExtension = false;

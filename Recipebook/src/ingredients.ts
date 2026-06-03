@@ -24,7 +24,7 @@ const CLASSES = {
   boldGreen: 'fw-bold text-success',
 };
 
-const UNITS = ['kg', 'dkg', 'g', 'l', 'dl', 'cl', 'ml'];
+const UNITS = ['kg', 'dkg', 'g', 'l', 'dl', 'cl', 'ml', 'db', 'csomag', 'szem', 'evőkanál', 'teáskanál', 'csésze', 'darab'];
 
 function renderUnitOptions(selectedUnit = 'kg') {
   return UNITS
