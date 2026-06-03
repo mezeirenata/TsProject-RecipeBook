@@ -1,8 +1,9 @@
 
 import './styles/style.css';
 import './styles/ingredients.css'
+import './styles/notifications.css'
 import type { Recipe } from './models/recipe';
-import { deleteRecipe, getAllIngredients, getAllRecipes, modifyRecipeImage, searchRecipeById} from './api/http.service';
+import { deleteRecipe, getAllIngredients, getAllRecipes, modifyRecipeImage, newcreationHappened, searchRecipeById, setcreationHappened} from './api/http.service';
 import { searchRecipes } from './components/search';
 import { backgroundScroll, gainFocusBack, getTimeString, handleEnteronModal} from './components/other';
 import {loadOptions, openDetailsWindow, plusbuttonsEventListener } from './components/modalFunctions';
@@ -15,6 +16,7 @@ const modal = document.getElementById('recipe-modal');
 
 
 // ❖━━━━━━━━━━━━━━━━━━ Egyéb ━━━━━━━━━━━━━━━━━━❖
+
 backgroundScroll(); // nav
 gainFocusBack(); // modal
 if (modal != null) handleEnteronModal(); // key.Enter
@@ -199,7 +201,7 @@ function printNotfound(){
     let searchVal = (document.getElementById("search-input")! as HTMLInputElement).value;
     let messageSearch =  (searchVal == '' ? '': ` ("${searchVal}") `);
     let messageCategory = globalFilterCategory == ''? '': ('<span class="bg-info fs-6 badge rounded  pt-2 px-2">'+`kategória: ${globalFilterCategory} ` + "</span>");
-    let messageType =  globalFilterType== ''? '': ('<span class="bg-warning text-black badge fs-6 rounded pt-2 px-2">' +` típus: ${globalFilterType} ` + "</span>");
+    let messageType =  globalFilterType== ''? '': ('<span class="bg-warning text-black badge fs-6 rounded pt-2 px-2">' +` elkészítési mód: ${globalFilterType} ` + "</span>");
     document.getElementById("not-found-message")!.innerHTML = `<p class="me-2 my-0">Nincs találat.</p> <p class="pe-4 mb-1"><span id="message-search"></span> ${messageCategory} ${messageType}</p>`;
     document.getElementById("message-search")!.innerText = messageSearch;
     document.getElementById("recipes-list")!.style.overflowY = "hidden";
@@ -221,12 +223,17 @@ async function successfulSearch(){
 }
 // ❖━━━━━━━━━━━━━━━━━━ Modal ━━━━━━━━━━━━━━━━━━❖
 if (modal != null){
-    modal!.addEventListener('hidden.bs.modal', () =>{
-        setTimeout(() => { // azért kell, mert míg lecsukódik a modal meg kell várni
+    modal!.addEventListener('hidden.bs.modal', async () =>{
+        setTimeout(async () => { // azért kell, mert míg lecsukódik a modal meg kell várni
         globalFilterCategory = "";
         globalFilterType = "";
         trySearch();
+        if ((await newcreationHappened()).newCreationHappened == true){
+            document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'recipe-added' } }));
+            await setcreationHappened(false);
+        }
         }, 500);
+    
     });
     plusbuttonsEventListener();
 }

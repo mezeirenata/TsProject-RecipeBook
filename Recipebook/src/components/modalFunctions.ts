@@ -1,4 +1,4 @@
-import { editRecipe, getAllIngredients, uploadRecipe } from "../api/http.service";
+import { editRecipe, getAllIngredients, setcreationHappened, uploadRecipe } from "../api/http.service";
 import { fileExtensions, RecipeCategory, RecipeType } from "../models/enum";
 import type { Ingredient } from "../models/ingredient";
 import type { Recipe } from "../models/recipe";
@@ -8,6 +8,7 @@ let selectedIds:string[] = [];
 let openedRecipe: Recipe | null = null;
 let ingredients: Ingredient[] = [];
 let modificationSaved = false;
+
 try{
     ingredients = await getAllIngredients();
 }
@@ -169,8 +170,9 @@ export async function saveRecipe():Promise<boolean>{
     try{
         if (openedRecipe == null){
             await uploadRecipe(recipeName,minutes,stepsList,type,category,image,ingredientsList);
-            (document.getElementById('btn-close-modal') as HTMLButtonElement).click();
             openedRecipe = null;
+            await setcreationHappened(true);
+            (document.getElementById('btn-close-modal') as HTMLButtonElement).click();
         }
         else{
             let tobeModified = openedRecipe;
@@ -257,7 +259,7 @@ export function renderIngredients(ingredients: Ingredient[],ingredientsFromRecip
 // hozzáadás
     plusBtn.addEventListener('click', () => {
         let selectedoption = listIngredients.options[listIngredients.selectedIndex];
-        let ingredientId = selectedoption.value.split("-")[2];
+        let ingredientId = selectedoption.value.split("ingredient-option-")[1];
         
         let ingredient = getIngredientById(ingredientId);
         addIngredientToList(ingredient, 0, selectedIngredients);
@@ -336,7 +338,6 @@ function addIngredientToList(ingredient:Ingredient, mennyiseg: number, selectedI
             document.getElementById(ingredient.id + "-price")!.innerText = (ingredient.egysegAr * Number(inputQuantity.value)).toString();
         }
         refreshSumPrice();
-        settime();
     });
     refreshSumPrice();
 }
@@ -652,6 +653,7 @@ document.getElementById('btn-close-modal-shown')!.addEventListener('click', () =
 document.getElementById('recipe-modal')!.addEventListener('hidden.bs.modal', () => {
     openedRecipe = null;
     plusbuttonsEventListener();
+
 });
 
 // modal megjelenítése

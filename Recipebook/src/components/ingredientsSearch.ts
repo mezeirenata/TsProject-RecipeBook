@@ -7,6 +7,17 @@ const tableContainer = document.getElementById("tableContainer") as HTMLDivEleme
 const notFound = document.getElementById("not-found") as HTMLDivElement;
 const zeroFound = document.getElementById("zero-found") as HTMLDivElement;
 
+function printError(eMessage:string){
+  document.getElementById('tableContainer')!.classList.toggle('d-none',true);
+  document.getElementById('api-error')!.classList.toggle('d-none',false);
+  document.getElementById('api-error')!.innerText = eMessage;   
+}
+
+function hideError(){
+  document.getElementById('tableContainer')!.classList.toggle('d-none',false);
+  document.getElementById('api-error')!.classList.toggle('d-none',true);
+}
+
 function showClearBtn() {
   const show = globalSearchValue === "";
   (document.getElementById("btn-clear") as HTMLButtonElement).classList.toggle("d-none", show);
@@ -20,6 +31,7 @@ function printNotFound(searchedValue: string) {
 }
 
 function printEmpty() {
+  document.getElementById('ingredientsTable')!.innerHTML = renderAddIngredientRow();
   zeroFound.classList.toggle("d-none", false);
   tableContainer.classList.toggle("d-none", false);
   notFound.classList.toggle("d-none", true);
@@ -33,8 +45,8 @@ function printResults(ingredients: Ingredient[], renderFn: (ingredients: Ingredi
 }
 
 async function trySearch(renderFunction: (ingredients: Ingredient[]) => void) {
-  // TODO: printError() - reni?
   try {
+    hideError();
     const allData = await getAllIngredients();
 
     if (globalSearchValue === "") {
@@ -59,6 +71,7 @@ async function trySearch(renderFunction: (ingredients: Ingredient[]) => void) {
           results = [single];
         } catch {
           results = [];
+
         }
       }
 
@@ -81,7 +94,7 @@ async function trySearch(renderFunction: (ingredients: Ingredient[]) => void) {
 
   } catch (e) {
     console.error((e as Error).message);
-    // TODO: printError() 
+    printError((e as Error).message);
   }
   if (!globalSearchValue.startsWith("#") && globalSearchValue.trim() != "") {
     console.log("most")
@@ -122,3 +135,83 @@ export async function initSearch(renderFn: (ingredients: Ingredient[]) => void) 
 
   await trySearch(renderFn);
 }
+const UNITS = ['kg', 'dkg', 'g', 'l', 'dl', 'cl', 'ml', 'db', 'csomag', 'szem', 'evőkanál', 'teáskanál', 'csésze', 'darab'];
+function renderUnitOptions(selectedUnit = 'kg') {
+  return UNITS
+    .map(unit => `<option value="${unit}" ${unit === selectedUnit ? 'selected' : ''}>${unit}</option>`)
+    .join('');
+}
+
+function renderAddIngredientRow() { //első a desktop, második a mobil 
+  return `
+    <tr class="table-light d-none d-md-table-row">
+      <th class="${CLASSES.cellAlign}" scope="row">#</th>
+      <td class="${CLASSES.cellAlignTop}">
+        <div class="position-relative">
+          <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
+          <div data-new-field="name-error" class="invalid-feedback text-start">Kérem adja meg a nevet!</div>
+        </div>
+      </td>
+      <td class="${CLASSES.cellAlignTop}">
+        <select data-new-field="unit" class="${CLASSES.select}">
+          ${renderUnitOptions()}
+        </select>
+      </td>
+      <td class="${CLASSES.cellAlignTop}">
+        <div class="position-relative">
+          <input data-new-field="price" type="number" min="0" class="${CLASSES.input}" placeholder="Ár">
+          <div data-new-field="price-error" class="invalid-feedback text-start">Kérem adja meg az árat!</div>
+        </div>
+      </td>
+      <td class="${CLASSES.cellAlignTop}">
+        <button type="button" data-action="add" class="${CLASSES.btnAdd}"><i class="${CLASSES.iconAdd} pointer-events-none"></i></button>
+      </td>
+    </tr>
+    
+    <tr class="table-light d-md-none">
+      <td colspan="5" class="${CLASSES.cellAlignTop} p-2">
+        <div class="d-flex flex-column gap-2">
+          <div class="position-relative">
+            <input data-new-field="name" type="text" class="${CLASSES.input}" placeholder="Név">
+            <div data-new-field="name-error" class="invalid-feedback text-start">Kérem adja meg a nevet!</div>
+          </div>
+          <div class="row g-2">
+            <div class="col-6">
+              <select data-new-field="unit" class="${CLASSES.select}">
+                ${renderUnitOptions()}
+              </select>
+            </div>
+            <div class="col-6">
+              <div class="position-relative">
+                <input data-new-field="price" type="number" min="0" class="${CLASSES.input}" placeholder="Ár">
+                <div data-new-field="price-error" class="invalid-feedback text-start">Kérem adja meg az árat!</div>
+              </div>
+            </div>
+          </div>
+          <button type="button" data-action="add" class="${CLASSES.btnAdd} w-100"><i class="${CLASSES.iconAdd} pointer-events-none"></i></button>
+        </div>
+      </td>
+    </tr>
+  `;
+}
+
+const CLASSES = {
+  cellAlign: 'align-middle text-center',
+  cellAlignTop: 'align-top text-center',
+  cellAlignMuted: 'align-middle text-center text-muted',
+  actions: 'align-middle text-center action-buttons',
+  input: 'form-control',
+  select: 'form-select',
+  btnAdd: 'btn btn-outline-success',
+  btnEdit: 'btn btn-outline-warning me-1',
+  btnDelete: 'btn btn-outline-danger',
+  btnSave: 'btn btn-outline-warning me-1',
+  btnCancel: 'btn btn-outline-danger',
+  iconAdd: 'bi bi-plus-lg',
+  iconEdit: 'bi bi-pencil',
+  iconDelete: 'bi bi-trash',
+  iconSave: 'bi bi-floppy',
+  iconCancel: 'bi bi-x-circle',
+  boldGreen: 'fw-bold text-success',
+};
+
