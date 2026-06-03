@@ -123,7 +123,6 @@ document.getElementById("select-type")!.addEventListener('input', () => {
     trySearch();
 });
 document.getElementById("search-input")!.addEventListener('input',async() => {
-    
     showClearBtn();
 });
 
