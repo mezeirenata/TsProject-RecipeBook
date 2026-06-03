@@ -1,23 +1,33 @@
 {
   "receptek": [
     {
-      "id": "1",
-      "nev": "Paradicsomos tésztaaa",
-      "elkeszitesiIdoPerc": 61,
+      "id": "2",
+      "nev": "Templom fala",
+      "elkeszitesiIdoPerc": 1,
       "elkeszites": [
-        "Főzd meg a tésztát 8-10 perc alatt.",
-        "Készíts paradicsomos szószt.",
-        "Keverd össze a tésztát a szósszal."
+        "Legyél Bartos",
+        "Várd ki a húsvétot",
+        "Borotváld le a fejedet",
+        "Kezdd el enni a templom falát"
       ],
-      "tipus": "Hűtés",
-      "kategoria": "Főétel",
-      "kepUrl": "https://kep.cdn.indexvas.hu/1/0/2908/29088/290887/29088759_520faee71c28c28eb8f97c89398f62ac_wm.jpg",
+      "tipus": "Instant",
+      "kategoria": "Desszert",
+      "kepUrl": "https://i.ytimg.com/vi/VIbXysaYDiY/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGUgWChXMA8=&rs=AOn4CLApN8_tID0Uk15ji49pDSZj3VVacQ",
       "hozzavalok": [
         {
           "hozzavalo": {
-            "id": "1",
-            "nev": "Paradicsom",
-            "egysegAr": 799,
+            "id": "27",
+            "nev": "Templom",
+            "egysegAr": 0,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "28",
+            "nev": "Bartos",
+            "egysegAr": 9999,
             "mertekegyseg": "db"
           },
           "mennyiseg": 1
@@ -25,37 +35,423 @@
       ]
     },
     {
-      "id": "2",
-      "nev": "Paradicsomos levesa",
-      "elkeszitesiIdoPerc": 75,
+      "id": "3",
+      "nev": "Rántott csirke",
+      "elkeszitesiIdoPerc": 45,
       "elkeszites": [
-        "Forralj vizet egy nagy lábasban.",
-        "Főzd meg a tésztát 8-10 perc alatt.",
-        "Készíts paradicsomos szószt.",
-        "Keverd össze a tésztát a szósszal."
+        "A csirkemellet verd ki vékonyra.",
+        "Forgasd meg lisztben, tojásban, majd zsemlemorzsában.",
+        "Forró olajban süsd aranybarnára mindkét oldalát."
       ],
-      "tipus": "Főzés",
-      "kategoria": "Leves",
-      "kepUrl": "https://kep.cdn.indexvas.hu/1/0/2908/29088/290887/29088759_520faee71c28c28eb8f97c89398f62ac_wm.jpg",
+      "tipus": "Sütés",
+      "kategoria": "Főétel",
+      "kepUrl": "https://kep.index.hu/1/0/3150/31501/315014/31501411_3c266a71070c711b612654d7c9d01015_wm.jpg",
       "hozzavalok": [
         {
           "hozzavalo": {
-            "id": "1",
-            "nev": "Paradicsom",
-            "egysegAr": 799,
+            "id": "4",
+            "nev": "Csirkemell",
+            "egysegAr": 1299,
             "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
         },
         {
-            "id": "2",
-            "nev": "Petrezselyem",
-            "egysegAr": 500,
-            "mertekegyseg": "kg"
+          "hozzavalo": {
+            "id": "5",
+            "nev": "Tojás",
+            "egysegAr": 120,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 2
         },
         {
-            "id": "3",
-            "nev": "Víz",
-            "egysegAr": 0,
+          "hozzavalo": {
+            "id": "6",
+            "nev": "Zsemlemorzsa",
+            "egysegAr": 350,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "nev": "Gulyásleves",
+      "elkeszitesiIdoPerc": 120,
+      "elkeszites": [
+        "A hagymát aprítsd fel és dinszteld meg olajon.",
+        "Add hozzá a kockára vágott marhahúst és pirítsd meg.",
+        "Szórd rá a paprikát, majd öntsd fel vízzel.",
+        "Főzd puhára kb. 90 percig, majd add hozzá a burgonyát."
+      ],
+      "tipus": "Főzés",
+      "kategoria": "Leves",
+      "kepUrl": "https://image-api.nosalty.hu/nosalty/images/recipes/SO/9o/tradicionalis-gulyasleves.jpg?w=1200&h=675&s=3f60aa2ef2e11054b311f58beb265224",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "7",
+            "nev": "Marhahús",
+            "egysegAr": 2500,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "8",
+            "nev": "Burgonya",
+            "egysegAr": 300,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "9",
+            "nev": "Hagyma",
+            "egysegAr": 250,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "nev": "Túrós rétes",
+      "elkeszitesiIdoPerc": 55,
+      "elkeszites": [
+        "Keverd össze a túrót tojással, cukorral és vaníliával.",
+        "Terítsd rá a tölteléket a réteslapra.",
+        "Tekerd fel és süsd 180 fokon 35 percig."
+      ],
+      "tipus": "Sütés",
+      "kategoria": "Desszert",
+      "kepUrl": "https://image-api.nosalty.hu/nosalty/images/recipes/AF/GB/turos-retes-reteslapbol.jpg?w=1200&h=920&s=37937b988443aa07bf2bb09c1d832e74",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "10",
+            "nev": "Túró",
+            "egysegAr": 699,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "11",
+            "nev": "Réteslap",
+            "egysegAr": 450,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 2
+        },
+        {
+          "hozzavalo": {
+            "id": "12",
+            "nev": "Cukor",
+            "egysegAr": 280,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "nev": "Zöldborsóleves",
+      "elkeszitesiIdoPerc": 40,
+      "elkeszites": [
+        "Tedd fel a vizet forrni egy lábasban.",
+        "Add hozzá a zöldborsót és a sárgarépát.",
+        "Főzd 20 percig, majd rántsd be liszttel és tejjel."
+      ],
+      "tipus": "Főzés",
+      "kategoria": "Leves",
+      "kepUrl": "https://kep.index.hu/1/0/6128/61284/612840/61284057_d638ce03abf61ed70c071685c22ce957_wm.jpg",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "13",
+            "nev": "Zöldborsó",
+            "egysegAr": 499,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "14",
+            "nev": "Sárgarépa",
+            "egysegAr": 320,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "15",
+            "nev": "Tej",
+            "egysegAr": 399,
             "mertekegyseg": "l"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "nev": "Rakott krumpli",
+      "elkeszitesiIdoPerc": 80,
+      "elkeszites": [
+        "Főzd meg a burgonyát héjában, majd hámozd meg és szeld karikákra.",
+        "Rétegezd a burgonyát, főtt tojást és kolbászt egy tepsiben.",
+        "Öntsd le tejföllel és süsd 200 fokon 30 percig."
+      ],
+      "tipus": "Sütés",
+      "kategoria": "Főétel",
+      "kepUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Rakott_krumpli.jpg",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "8",
+            "nev": "Burgonya",
+            "egysegAr": 300,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 2
+        },
+        {
+          "hozzavalo": {
+            "id": "16",
+            "nev": "Kolbász",
+            "egysegAr": 1800,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "17",
+            "nev": "Tejföl",
+            "egysegAr": 450,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "nev": "Palacsinta",
+      "elkeszitesiIdoPerc": 30,
+      "elkeszites": [
+        "Keverd össze a lisztet, tojást, tejet és egy csipet sót.",
+        "Hagyd állni a tésztát 10 percig.",
+        "Süsd ki vékony palacsintákat egy forró serpenyőben."
+      ],
+      "tipus": "Sütés",
+      "kategoria": "Desszert",
+      "kepUrl": "https://www.venusz.hu/assets/recipe_cards/145.jpg",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "18",
+            "nev": "Liszt",
+            "egysegAr": 200,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "5",
+            "nev": "Tojás",
+            "egysegAr": 120,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 2
+        },
+        {
+          "hozzavalo": {
+            "id": "15",
+            "nev": "Tej",
+            "egysegAr": 399,
+            "mertekegyseg": "l"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "nev": "Töltött paprika",
+      "elkeszitesiIdoPerc": 90,
+      "elkeszites": [
+        "Vájd ki a paprikákat és töltsd meg darált hússal kevert rizzsel.",
+        "Tedd a töltött paprikákat paradicsomos alapba.",
+        "Főzd lefedve közepes lángon 60 percig."
+      ],
+      "tipus": "Főzés",
+      "kategoria": "Főétel",
+      "kepUrl": "https://image-api.nosalty.hu/nosalty/images/recipes/KW/yR/hagyomanyos-toltott-paprika.jpeg?w=1200&h=920&s=40c513318b2a963f88e07e035c0717c3",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "19",
+            "nev": "Paprika",
+            "egysegAr": 599,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 4
+        },
+        {
+          "hozzavalo": {
+            "id": "20",
+            "nev": "Darált sertéshús",
+            "egysegAr": 1600,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "21",
+            "nev": "Rizs",
+            "egysegAr": 380,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "nev": "Csirkepörkölt",
+      "elkeszitesiIdoPerc": 70,
+      "elkeszites": [
+        "A hagymát aprítsd fel és dinszteld meg zsíron.",
+        "Add hozzá a paprikát és a csirkedarabokat.",
+        "Főzd lefedve 50 percig, közben néha keverd meg."
+      ],
+      "tipus": "Főzés",
+      "kategoria": "Főétel",
+      "kepUrl": "https://receptvaros.hu/wp-content/uploads/2012/10/Tejf%C3%B6l%C3%B6s-csirkep%C3%B6rk%C3%B6lt.jpg",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "22",
+            "nev": "Csirke",
+            "egysegAr": 999,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "9",
+            "nev": "Hagyma",
+            "egysegAr": 250,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "23",
+            "nev": "Pirospaprika",
+            "egysegAr": 890,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "nev": "Almás pite",
+      "elkeszitesiIdoPerc": 65,
+      "elkeszites": [
+        "Készítsd el az omlós tésztát lisztből, vajból és cukorból.",
+        "Hámozd meg és reszeld le az almákat, ízesítsd fahéjjal.",
+        "Tedd a tésztát a formába, öntsd rá az almatölteléket és süsd 180 fokon 40 percig."
+      ],
+      "tipus": "Sütés",
+      "kategoria": "Desszert",
+      "kepUrl": "https://www.momwithfive.com/wp-content/uploads/2018/11/alm%C3%A1s-pite.jpg",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "24",
+            "nev": "Alma",
+            "egysegAr": 450,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 2
+        },
+        {
+          "hozzavalo": {
+            "id": "18",
+            "nev": "Liszt",
+            "egysegAr": 200,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "25",
+            "nev": "Vaj",
+            "egysegAr": 1200,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "nev": "Fasírt",
+      "elkeszitesiIdoPerc": 35,
+      "elkeszites": [
+        "Keverd össze a darált húst, tojást, áztatott zsemlét és fűszereket.",
+        "Formázz belőle kis gömböket.",
+        "Süsd forró olajban mindkét oldalát aranybarnára."
+      ],
+      "tipus": "Sütés",
+      "kategoria": "Főétel",
+      "kepUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Faschiertes_Laibchen.jpg/250px-Faschiertes_Laibchen.jpg",
+      "hozzavalok": [
+        {
+          "hozzavalo": {
+            "id": "20",
+            "nev": "Darált sertéshús",
+            "egysegAr": 1600,
+            "mertekegyseg": "kg"
+          },
+          "mennyiseg": 1
+        },
+        {
+          "hozzavalo": {
+            "id": "5",
+            "nev": "Tojás",
+            "egysegAr": 120,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 2
+        },
+        {
+          "hozzavalo": {
+            "id": "26",
+            "nev": "Zsemle",
+            "egysegAr": 80,
+            "mertekegyseg": "db"
+          },
+          "mennyiseg": 2
         }
       ]
     }
@@ -70,7 +466,163 @@
     {
       "id": "2",
       "nev": "Uborka",
-      "egysegAr": 400,
+      "mertekegyseg": "kg",
+      "egysegAr": 600
+    },
+    {
+      "id": "3",
+      "nev": "Víz",
+      "egysegAr": 0,
+      "mertekegyseg": "l"
+    },
+    {
+      "id": "4",
+      "nev": "Csirkemell",
+      "egysegAr": 1299,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "5",
+      "nev": "Tojás",
+      "egysegAr": 120,
+      "mertekegyseg": "db"
+    },
+    {
+      "id": "6",
+      "nev": "Zsemlemorzsa",
+      "egysegAr": 350,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "7",
+      "nev": "Marhahús",
+      "egysegAr": 2500,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "8",
+      "nev": "Burgonya",
+      "egysegAr": 300,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "9",
+      "nev": "Hagyma",
+      "egysegAr": 250,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "10",
+      "nev": "Túró",
+      "egysegAr": 699,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "11",
+      "nev": "Réteslap",
+      "egysegAr": 450,
+      "mertekegyseg": "db"
+    },
+    {
+      "id": "12",
+      "nev": "Cukor",
+      "egysegAr": 280,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "13",
+      "nev": "Zöldborsó",
+      "egysegAr": 499,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "14",
+      "nev": "Sárgarépa",
+      "egysegAr": 320,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "15",
+      "nev": "Tej",
+      "egysegAr": 399,
+      "mertekegyseg": "l"
+    },
+    {
+      "id": "16",
+      "nev": "Kolbász",
+      "egysegAr": 1800,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "17",
+      "nev": "Tejföl",
+      "egysegAr": 450,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "18",
+      "nev": "Liszt",
+      "egysegAr": 200,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "19",
+      "nev": "Paprika",
+      "egysegAr": 599,
+      "mertekegyseg": "db"
+    },
+    {
+      "id": "20",
+      "nev": "Darált sertéshús",
+      "egysegAr": 1600,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "21",
+      "nev": "Rizs",
+      "egysegAr": 380,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "22",
+      "nev": "Csirke",
+      "egysegAr": 999,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "23",
+      "nev": "Pirospaprika",
+      "egysegAr": 890,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "24",
+      "nev": "Alma",
+      "egysegAr": 450,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "25",
+      "nev": "Vaj",
+      "egysegAr": 1200,
+      "mertekegyseg": "kg"
+    },
+    {
+      "id": "26",
+      "nev": "Zsemle",
+      "egysegAr": 80,
+      "mertekegyseg": "db"
+    },
+    {
+      "id": "27",
+      "nev": "Templom",
+      "egysegAr": 0,
+      "mertekegyseg": "db"
+    },
+    {
+      "id": "28",
+      "nev": "Bartos",
+      "egysegAr": 9999,
       "mertekegyseg": "db"
     }
   ],
