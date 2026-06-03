@@ -135,7 +135,7 @@ export async function initSearch(renderFn: (ingredients: Ingredient[]) => void) 
 
   await trySearch(renderFn);
 }
-const UNITS = ['kg', 'dkg', 'g', 'l', 'dl', 'cl', 'ml'];
+const UNITS = ['kg', 'dkg', 'g', 'l', 'dl', 'cl', 'ml', 'db', 'csomag', 'szem', 'evőkanál', 'teáskanál', 'csésze', 'darab'];
 function renderUnitOptions(selectedUnit = 'kg') {
   return UNITS
     .map(unit => `<option value="${unit}" ${unit === selectedUnit ? 'selected' : ''}>${unit}</option>`)
