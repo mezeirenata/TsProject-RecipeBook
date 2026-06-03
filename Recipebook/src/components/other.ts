@@ -35,7 +35,7 @@ export function gainFocusBack(){
             buttons.forEach(btn  => {
                 (btn as HTMLButtonElement)!.blur(); // fókusz visszanyerése
             });
-        }, 0);
+        }, 500);
     });
 }
 

@@ -1,44 +1,55 @@
 
-// api hibák
-// sort
-// api hibakezelésnél kell majd a loading screen
-// loading screen alapból bekapcs + minden inputnál
-// footer?
-// visszakérdezés
-// állapot jelzés
-// validáció
 import './styles/style.css';
 import './styles/ingredients.css'
 import type { Recipe } from './models/recipe';
-import { deleteRecipe, getAllRecipes} from './api/http.service';
+import { deleteRecipe, getAllIngredients, getAllRecipes, modifyRecipeImage, searchRecipeById} from './api/http.service';
 import { searchRecipes } from './components/search';
 import { backgroundScroll, gainFocusBack, getTimeString, handleEnteronModal} from './components/other';
-import {loadOptions, plusbuttonsEventListener } from './components/modalFunctions';
+import {loadOptions, openDetailsWindow, plusbuttonsEventListener } from './components/modalFunctions';
+
 
 let globalFilterCategory = "";
 let globalFilterType = "";
+const modal = document.getElementById('recipe-modal');
 
-//// egyéb
+
+
+// ❖━━━━━━━━━━━━━━━━━━ Egyéb ━━━━━━━━━━━━━━━━━━❖
 backgroundScroll(); // nav
-
 gainFocusBack(); // modal
-
-handleEnteronModal(); // key.Enter
-
-/// main
+if (modal != null) handleEnteronModal(); // key.Enter
+function showClearBtn(){
+    let show = false;
+    if  ((document.getElementById("search-input")! as HTMLSelectElement).value == "" &&
+    (document.getElementById("select-type")! as HTMLSelectElement).value == "" &&
+    (document.getElementById("select-category")! as HTMLSelectElement).value == ""){
+        show = true;
+    }
+    (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none", show);
+}
+async function tryLoad(){
+    try{
+        await getAllIngredients();
+    }
+    catch(e){
+        printError((e as Error).message);
+    }
+}
+await tryLoad();
+// ❖━━━━━━━━━━━━━━━━━━ Listázás ━━━━━━━━━━━━━━━━━━❖
 function renderRecipes(recipes: Recipe[]){
     const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
-    recipes.forEach(recipe => {
+    recipes.reverse().forEach(recipe => {
         let timeString = getTimeString(recipe.elkeszitesiIdoPerc);
-  
-        const tdDiv = document.createElement('td');
-        tdDiv.className = "col-12 col-md-6 col-lg-4 mb-5";
-
         const cardDiv = document.createElement('div');
+        const tdDiv = document.createElement('td');
+  
+        tdDiv.className = "col-12 col-md-6 col-lg-4 mb-5";
         cardDiv.className = 'card mx-auto shadow w-100 card-recipe';
         cardDiv.style.width = "18rem";
+        
         cardDiv.innerHTML = `
-        <img src="${recipe.kepUrl}" class="card-img-top object-fit-cover" style="height:280px;" alt="Sikertelen képbetöltés">
+        <img src="${recipe.kepUrl}" class="card-img-top object-fit-cover" style="min-height:280px;max-height:280px;" alt="Sikertelen képbetöltés" id="card-img-${recipe.id}">
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h5 class="card-title"><span class="fw-bold me-2" id="card-nev-${recipe.id}"></span></h5>
@@ -53,30 +64,54 @@ function renderRecipes(recipes: Recipe[]){
             </div>
             <hr>
             <div class="d-flex justify-content-between" >
-                <div class="btn btn-success w-100 me-2 fw-bold " id="details-${recipe.id}">Részletek</div>
+            
+                <button class="btn btn-success w-100 me-2 fw-bold " data-bs-toggle="modal" data-bs-target="#recipe-modal" id="details-${recipe.id}">Részletek</button>
                 <div class="btn btn-danger" id="delete-${recipe.id}"><i class="bi bi-trash3"></i></div>
             </div>
         </div>
         `;
-
         tdDiv.appendChild(cardDiv);
         divList.appendChild(tdDiv);
+    //
+        document.getElementById(`card-img-${recipe.id}`)!.addEventListener('error', async () => {
+            (document.getElementById(`card-img-${recipe.id}`) as HTMLImageElement).src = "/images/placeholder_error.png";       
+            recipe.kepUrl = "/images/placeholder_error.png";
+            try{
+                await modifyRecipeImage(recipe);
+            }
+            catch(e){
 
-        // abban az esetben, ha html lett megadva névnek, akkor ne értelmezze
-        document.getElementById(`card-nev-${recipe.id}`)!.innerText = recipe.nev;
-        document.getElementById(`delete-${recipe.id}`)!.addEventListener('click', async () => {
-            if (confirm("Biztosan törli a receptet?")){
-                await deleteRecipe(recipe.id);
-                loadOptions(await getAllRecipes("",""));
-                await trySearch();
             }
         });
-        // részletek
-        // kedvencek (?) 
+    //   
+        document.getElementById(`card-nev-${recipe.id}`)!.innerText = recipe.nev; // abban az esetben, ha html lett megadva névnek, akkor ne értelmezze
+        document.getElementById(`delete-${recipe.id}`)!.addEventListener('click', async () => {
+            if (confirm("Biztosan törli a receptet?")){
+                try{
+                    await deleteRecipe(recipe.id);
+                    loadOptions(await getAllRecipes("",""));
+                    await trySearch();
+                }
+                catch(e){
+
+                }
+            }
+        });
+    // részletek
+        document.getElementById(`details-${recipe.id}`)!.addEventListener('click', async() => {
+            try{
+                let selectedRecipe:Recipe = await searchRecipeById(recipe.id);
+                await openDetailsWindow(selectedRecipe); 
+            }
+            catch(e){
+                // errorprint
+                console.error(e);
+            }
+        });
+        
     });
 }
-
-/// eventlistenerek - navbar
+// ❖━━━━━━━━━━━━━━━━━━ Eventlistenerek ━━━━━━━━━━━━━━━━━━❖
 document.getElementById("select-category")!.addEventListener('input', () => {
     globalFilterCategory = (document.getElementById("select-category")! as HTMLSelectElement).value;
     showClearBtn();
@@ -90,32 +125,28 @@ document.getElementById("select-type")!.addEventListener('input', () => {
 document.getElementById("search-input")!.addEventListener('input',async() => {
     showClearBtn();
 });
+
 document.getElementById("search-input")!.addEventListener('keydown',async(e) => {
-    if (e.key == "Enter" ){
-        trySearch();
-    }
+    if (e.key == "Enter" ) trySearch();
 });
 (document.getElementById("btn-clear") as HTMLButtonElement)!.addEventListener('click', async () => {
     (document.getElementById("search-input")! as HTMLSelectElement).value = "";
     (document.getElementById("select-type")! as HTMLSelectElement).selectedIndex = 0;
     (document.getElementById("select-category")! as HTMLSelectElement).selectedIndex = 0;
+    (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none",true);
     globalFilterCategory = "";
     globalFilterType = "";
     trySearch();
-    (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none",true);
-
 });
 document.getElementById("btn-search")!.addEventListener( 'click',async() => {
     trySearch();
 });
-
-// keresés
+// ❖━━━━━━━━━━━━━━━━━━ Keresés ━━━━━━━━━━━━━━━━━━❖
 async function trySearch(){
-    /// ha az összes elemről van szó és 0, akkor nem dob errort, helyette kiírja hogy üres
-    // ha szűrt elemről és 0 a találat, akkor errort dob -> error megjelenítésén belül megjeleníti a nincs találatot is
- try{
-    const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
-    document.getElementById("not-found")!.classList.toggle("d-none",true);
+    hideError();
+    try{
+        const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
+        document.getElementById("not-found")!.classList.toggle("d-none",true);
         if (globalFilterCategory == "" && globalFilterType ==  "" && (document.getElementById("search-input") as HTMLInputElement)!.value == ""){
             let recipes = await searchRecipes("","");
             if (recipes.length == 0){
@@ -143,41 +174,39 @@ async function trySearch(){
     }
     catch(e){
         console.error(e);
-        printError();
+        printError((e as Error).message);
     }
 }
-//// error
 function noError(){
     document.getElementById("recipes-list")!.classList.toggle("d-none",false);
     document.getElementById("recipes-list")!.style.overflowY = "auto";
     hideError();
 }
-
-function printError(){
-       // error print
-        // loading screen kikapcs
+function printError(eMessage:string){
+    document.getElementById('recipes-list-container')!.classList.toggle('d-none',true);
+    document.getElementById('api-error')!.classList.toggle('d-none',false);
+    document.getElementById('api-error')!.innerText = eMessage;
+    
 }
-
 function hideError(){
-    // error screen kikapcs
-    // loading screen kikapcs
+    document.getElementById('recipes-list-container')!.classList.toggle('d-none',false);
+    document.getElementById('api-error')!.classList.toggle('d-none',true);
 }
-//// search eredmények
 function printNotfound(){
     (document.getElementById("zero-found") as HTMLDivElement)!.classList.toggle("d-none",true);
     document.getElementById("recipes-list")!.classList.toggle("d-none",true);
     document.getElementById("not-found")!.classList.toggle("d-none",false); // ha tényleges error van ,csak akkor írja ki
     let searchVal = (document.getElementById("search-input")! as HTMLInputElement).value;
     let messageSearch =  (searchVal == '' ? '': ` ("${searchVal}") `);
-    let messageCategory = globalFilterCategory == ''? '': ('<span class="bg-info fs-6 badge rounded  pt-2 px-2">'+` ${globalFilterCategory} ` + "</span>");
+    let messageCategory = globalFilterCategory == ''? '': ('<span class="bg-info fs-6 badge rounded  pt-2 px-2">'+`kategória: ${globalFilterCategory} ` + "</span>");
     let messageType =  globalFilterType== ''? '': ('<span class="bg-warning text-black badge fs-6 rounded pt-2 px-2">' +` típus: ${globalFilterType} ` + "</span>");
     document.getElementById("not-found-message")!.innerHTML = `<p class="me-2 my-0">Nincs találat.</p> <p class="pe-4 mb-1"><span id="message-search"></span> ${messageCategory} ${messageType}</p>`;
     document.getElementById("message-search")!.innerText = messageSearch;
     document.getElementById("recipes-list")!.style.overflowY = "hidden";
 }
-
 async function successfulSearch(){
     const divList = (document.getElementById("recipes-list") as HTMLDivElement)!;
+    // ha ideáig eljutott, a fetch sikerült
     let recipes = await (searchRecipes(globalFilterCategory,globalFilterType));
     divList.classList.toggle("d-none",false);
     (document.getElementById("zero-found") as HTMLDivElement)!.classList.toggle("d-none",true);
@@ -189,23 +218,19 @@ async function successfulSearch(){
     
     noError();
     renderRecipes(recipes);
+}
+// ❖━━━━━━━━━━━━━━━━━━ Modal ━━━━━━━━━━━━━━━━━━❖
+if (modal != null){
+    modal!.addEventListener('hidden.bs.modal', () =>{
+        setTimeout(() => { // azért kell, mert míg lecsukódik a modal meg kell várni
+        globalFilterCategory = "";
+        globalFilterType = "";
+        trySearch();
+        }, 500);
+    });
     plusbuttonsEventListener();
 }
-
-//// egyéb
-function showClearBtn(){
-    let show = false;
-    if  ((document.getElementById("search-input")! as HTMLSelectElement).value == "" &&
-    (document.getElementById("select-type")! as HTMLSelectElement).value == "" &&
-    (document.getElementById("select-category")! as HTMLSelectElement).value == ""){
-        show = true;
-    }
-    (document.getElementById("btn-clear") as HTMLButtonElement)!.classList.toggle("d-none", show);
-}
-
-// legelőször ez fut le, eredetileg d-none nem szerepel a listán, ha error van, akkor viszont igen
+// ❖━━━━━━━━━━━━━━━━━━ Első futás ━━━━━━━━━━━━━━━━━━❖
 if (!document.getElementById("recipes-list")!.className.includes("d-none")){
     trySearch();
 }
-
-plusbuttonsEventListener();
