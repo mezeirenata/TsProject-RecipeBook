@@ -1,0 +1,61 @@
+#notificationDiv {
+  position: fixed;
+  top: 54%; /* szia reni  */
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  border-radius: 12px;
+  padding: 16px 24px;
+  width: auto;
+  max-width: 500px;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.4s ease-out, slideUp 0.4s ease-in 2.6s forwards;
+  font-weight: 500;
+  font-size: 16px;
+  z-index: 9999;
+  border: none;
+}
+
+#notificationDiv button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 12px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(-50% - 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(-50% - 20px));
+  }
+}
+
+/* #notificationDiv[data-type="success"] {
+  background: linear-gradient(135deg, #187a2f 0%, #20c997 100%);
+  color: white;
+}
+
+#notificationDiv[data-type="error"] {
+  background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%);
+  color: white;
+} */

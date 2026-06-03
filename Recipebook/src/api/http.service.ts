@@ -88,7 +88,8 @@ export async function deleteIngredient(id: string){
         method: "DELETE",
         redirect: "follow"
     });
-    if (!response.ok) throw new Error("Hiba történt a törlés közben." + ` (${response.status})`);
+    if (!response.ok) throw new Error("Hiba törléskor");
+    document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'ingredient-deleted' } }));
     return await response.json();
 }
 
@@ -121,7 +122,8 @@ export async function uploadIngredient(newIngredient: Ingredient): Promise<Ingre
         },
         body: JSON.stringify(newIngredient)
     });
-    if (!response.ok) throw new Error("Hiba történt a feltöltés közben." + ` (${response.status})`);
+    if (!response.ok) throw new Error("Hiba feltöltéskor");
+    document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'ingredient-added' } }));
     return await response.json();
 }
 
@@ -167,6 +169,7 @@ export async function editIngredient(editedIngredient: Ingredient): Promise<Ingr
         },
         body: JSON.stringify(editedIngredient)
     });
-    if (!response.ok) throw new Error("Hiba lépett fel módosítás közben." +` (${response.status})`);
+    if (!response.ok) throw new Error("Hiba szerkesztéskor");
+    document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'ingredient-edited' } }));
     return await response.json();
 }

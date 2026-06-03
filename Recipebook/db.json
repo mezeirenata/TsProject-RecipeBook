@@ -43,9 +43,19 @@
             "id": "1",
             "nev": "Paradicsom",
             "egysegAr": 799,
-            "mertekegyseg": "db"
-          },
-          "mennyiseg": 3
+            "mertekegyseg": "kg"
+        },
+        {
+            "id": "2",
+            "nev": "Petrezselyem",
+            "egysegAr": 500,
+            "mertekegyseg": "kg"
+        },
+        {
+            "id": "3",
+            "nev": "Víz",
+            "egysegAr": 0,
+            "mertekegyseg": "l"
         }
       ]
     }
