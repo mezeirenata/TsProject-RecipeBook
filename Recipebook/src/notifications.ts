@@ -7,9 +7,9 @@ const eventMessages: { [key: string]: string } = {
   'ingredient-added': 'Hozzávaló hozzáadva!',
   'ingredient-deleted': 'Hozzávaló törölve!',
   'ingredient-edited': 'Hozzávaló frissítve!',
-  // 'recipe-added': 'Recept hozzáadva!',
-  // 'recipe-deleted': 'Recept törölve!',
-  // 'recipe-edited': 'Recept frissítve!'
+  'recipe-added': 'Recept hozzáadva!',
+  'recipe-deleted': 'Recept törölve!',
+  'recipe-edited': 'Recept frissítve!'
 };
 
 document.addEventListener('app-event', (event: Event) => { //nem kéne hogy any legyen
@@ -24,7 +24,7 @@ document.addEventListener('app-event', (event: Event) => { //nem kéne hogy any 
     notificationDiv.classList.add("alert", "alert-success");
 
 
-    if (eventType === 'ingredient-added' || eventType === 'ingredient-edited') {
+    if (eventType === 'ingredient-added' || eventType === 'ingredient-edited' || eventType === 'recipe-added' || eventType === 'recipe-edited') {
       notificationDiv.setAttribute('data-type', 'success');
       notificationDiv.classList.replace("alert-danger", "alert-success");
     }

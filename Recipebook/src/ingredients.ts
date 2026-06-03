@@ -1,5 +1,5 @@
 import type { Ingredient } from './models/ingredient';
-import { getAllIngredients, deleteIngredient, uploadIngredient, editIngredient, searchIngredientById, searchIngredientsByFetch } from './api/http.service';
+import { getAllIngredients, deleteIngredient, uploadIngredient, editIngredient } from './api/http.service';
 import { initSearch } from './components/ingredientsSearch';
 
 const tableBody = document.getElementById('ingredientsTable') as HTMLTableSectionElement;
@@ -283,7 +283,7 @@ function tableEvents() {
       }
     }
     catch (error) {
-      console.error("BAJ VAN", error);
+      console.error("Hiba", error);
     }
   });
 }

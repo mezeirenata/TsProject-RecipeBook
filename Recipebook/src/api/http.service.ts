@@ -80,6 +80,7 @@ export async function deleteRecipe(id: string){
         redirect: "follow"
     });
     if (!response.ok) throw new Error("Hiba történt a törlés közben." + ` (${response.status})`);
+    document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'recipe-deleted' } }));
     return await response.json();
 }
 export async function deleteIngredient(id: string){
@@ -106,9 +107,7 @@ export async function uploadRecipe(nev:string,elkeszitesiIdoPerc:Number, elkeszi
         body: JSON.stringify({id:"1",nev:nev,elkeszitesiIdoPerc:elkeszitesiIdoPerc,elkeszites:elkeszites,tipus:tipus,kategoria:kategoria,kepUrl:kepUrl,hozzavalok:hozzavalok}),
     });
     if (!response.ok) throw new Error("Hiba történt a feltöltés közben." + ` (${response.status})`);
-
-
-
+    document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'recipe-added' } }));
     return await response.json();
 }
 export async function uploadIngredient(newIngredient: Ingredient): Promise<Ingredient>
@@ -171,5 +170,18 @@ export async function editIngredient(editedIngredient: Ingredient): Promise<Ingr
     });
     if (!response.ok) throw new Error("Hiba szerkesztéskor");
     document.dispatchEvent(new CustomEvent('app-event', { detail: { type: 'ingredient-edited' } }));
+    return await response.json();
+}
+
+//---
+export async function newcreationHappened():Promise<{newCreationHappened: boolean}>{
+    let url = BASE_URL + "/newCreationHappened";
+    const response = await fetch(url, {method: "GET", redirect:"follow"});
+    return await response.json();
+}
+
+export async function setcreationHappened(setValue: boolean):Promise<{newCreationHappened: boolean }>{
+    let url = BASE_URL + "/newCreationHappened";
+    const response = await fetch(url, {method:"PATCH", redirect:"follow", headers: {"Content-Type":"application/json"},body: JSON.stringify({newcreationHappened:setValue})});
     return await response.json();
 }
